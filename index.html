@@ -9,14 +9,14 @@
     :root{
       --bg:#fff6ef;
       --card:#ffffff;
-      --ink:#111827;
+      --ink:#0f172a;
       --muted:#6b7280;
       --brand:#ff7a00;
       --brand2:#ff9a3d;
       --line:#f2e6db;
-      --shadow: 0 10px 25px rgba(16,24,40,.10);
+      --shadow: 0 12px 28px rgba(16,24,40,.12);
       --r:18px;
-      --r2:22px;
+      --r2:24px;
       --good:#16a34a;
       --bad:#ef4444;
     }
@@ -31,36 +31,48 @@
         radial-gradient(900px 500px at 110% 0%, #ffe0c3 0, transparent 60%),
         var(--bg);
     }
+    a{color:inherit}
 
+    /* Header */
     header{
       position:sticky; top:0; z-index:50;
       background: rgba(255,255,255,.88);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-bottom:1px solid var(--line);
     }
     .wrap{max-width:1120px;margin:0 auto;padding:12px 14px}
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center;min-width:0}
+    .topbar{
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
+    }
+    .brand{display:flex;gap:12px;align-items:center;min-width:0}
     .logo{
-      width:40px;height:40px;border-radius:14px;
+      width:44px;height:44px;border-radius:16px;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       box-shadow: var(--shadow);
+      position:relative; overflow:hidden;
       flex:0 0 auto;
     }
-    h1{font-size:16px;margin:0;line-height:1.1}
-    .sub{color:var(--muted);font-size:12px;margin-top:2px;line-height:1.2}
-    .pill{
-      display:inline-flex;gap:8px;align-items:center;
-      padding:8px 10px;border-radius:999px;
-      background:#fff;border:1px solid var(--line);
-      font-size:12px;color:var(--muted);
-      white-space:nowrap;
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 25% 25%, rgba(255,255,255,.55), transparent 60%);
+      transform: rotate(18deg);
     }
-    .pill.good{color:var(--good)}
-    .pill.bad{color:var(--bad)}
+    .brandText{min-width:0}
+    .brandName{font-size:18px;margin:0;line-height:1.1;letter-spacing:.2px}
+    .tagline{
+      margin-top:3px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.2;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-weight:900;
+    }
+    .tagline span{color:var(--brand)}
     .searchRow{
       display:flex;gap:10px;align-items:center;justify-content:flex-end;
-      flex:1;min-width:0
+      flex:1;min-width:0;
     }
     .search{
       flex:1;min-width:0;max-width:560px;
@@ -71,8 +83,17 @@
       font:inherit;
       outline:none;
     }
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;
+      background:#fff;border:1px solid var(--line);
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;
+    }
+    .pill.good{color:var(--good)}
+    .pill.bad{color:var(--bad)}
 
-    /* Layout: mobile-first */
+    /* Page Layout */
     .page{
       max-width:1120px;
       margin:0 auto;
@@ -80,7 +101,7 @@
       display:grid;
       grid-template-columns: 1fr;
       gap:14px;
-      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+      padding-bottom: calc(100px + env(safe-area-inset-bottom));
     }
 
     .card{
@@ -96,30 +117,31 @@
       display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
     }
     .bd{padding:14px}
-    .sectionTitle{font-size:15px;margin:0 0 4px}
+    .sectionTitle{font-size:15px;margin:0 0 4px;font-weight:950}
     .sectionDesc{margin:0;color:var(--muted);font-size:12px;line-height:1.3}
 
-    .btn{
-      border:0; cursor:pointer;
-      border-radius:999px;
-      padding:11px 14px;
-      font-weight:900;
-      background: linear-gradient(135deg,var(--brand),var(--brand2));
-      color:#fff;
-      box-shadow: var(--shadow);
-      transition: transform .05s ease, opacity .15s ease;
-      user-select:none;
-    }
-    .btn:active{transform: translateY(1px)}
-    .btn.secondary{
-      background:#fff;color:var(--ink);
+    /* Chips */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .chip{
       border:1px solid var(--line);
-      box-shadow:none;
-      font-weight:800;
+      background:#fff;
+      border-radius:999px;
+      padding:8px 10px;
+      font-size:12px;
+      color:var(--muted);
+      cursor:pointer;
+      user-select:none;
+      transition:.12s;
     }
-    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .chip:hover{transform:translateY(-1px)}
+    .chip.active{
+      border-color: rgba(255,122,0,.35);
+      box-shadow: 0 6px 16px rgba(255,122,0,.18);
+      color:var(--ink);
+      font-weight:900;
+    }
 
-    /* Menu */
+    /* Restaurant blocks */
     .restList{display:flex;flex-direction:column;gap:12px}
     .rest{
       padding:12px;
@@ -127,31 +149,69 @@
       border-radius: 18px;
       background: #fff;
     }
-    .restTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .restName{font-size:15px;margin:0;line-height:1.2;font-weight:900}
+    .restToggle{
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      cursor:pointer;
+      user-select:none;
+    }
+    .restLeft{min-width:0}
+    .restName{font-size:15px;margin:0;line-height:1.2;font-weight:950}
     .restMeta{color:var(--muted);font-size:12px;margin:4px 0 0;line-height:1.3}
+    .chev{
+      width:36px;height:36px;border-radius:14px;
+      border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;
+      background:#fff;
+      flex:0 0 auto;
+      transition: transform .18s ease;
+    }
+    .chev.open{transform: rotate(180deg)}
+    .restBody{margin-top:10px}
+    .restBody[hidden]{display:none !important}
 
     .catBlock{
       margin-top:12px;
       border-top:1px dashed var(--line);
       padding-top:10px;
     }
-    .catHead{
+    .catToggle{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin-bottom:8px;
+      cursor:pointer;
+      user-select:none;
+      padding:6px 2px;
     }
-    .catName{font-weight:900;font-size:13px;letter-spacing:.2px}
+    .catName{font-weight:950;font-size:13px;letter-spacing:.2px}
+    .catRight{display:flex;gap:8px;align-items:center}
+    .miniPill{
+      display:inline-flex;gap:6px;align-items:center;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:11px;color:var(--muted);
+      white-space:nowrap;
+    }
+    .catBody[hidden]{display:none !important}
 
-    .items{display:flex;flex-direction:column;gap:10px}
+    /* Items */
+    .items{display:flex;flex-direction:column;gap:10px;margin-top:8px}
     .item{
       display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
       padding:12px;border-radius:16px;border:1px solid var(--line);
       background: #fffdfb;
     }
     .itemMain{min-width:0;flex:1}
-    .itemTitle{font-weight:900}
+    .itemTitle{font-weight:950}
     .itemDesc{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.35}
-    .price{font-weight:900;margin-top:8px}
+    .itemMetaRow{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+    .price{font-weight:950}
+    .selectedPill{
+      display:none;
+      border:1px solid rgba(255,122,0,.35);
+      background: rgba(255,122,0,.08);
+      color: var(--ink);
+      padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;
+    }
+    .selectedPill.show{display:inline-flex}
 
     .optBox{
       margin-top:10px;
@@ -160,7 +220,7 @@
       border-radius:14px;
       padding:10px;
     }
-    .optTitle{font-size:12px;color:var(--muted);margin:0 0 6px}
+    .optTitle{font-size:12px;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;gap:10px}
     .optList{display:grid;grid-template-columns:1fr;gap:8px}
     .optLabel{
       display:flex;gap:8px;align-items:flex-start;
@@ -168,14 +228,38 @@
     }
     .optLabel input{margin-top:2px}
 
+    .actionCol{
+      display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto;
+    }
+    .btn{
+      border:0; cursor:pointer;
+      border-radius:999px;
+      padding:11px 14px;
+      font-weight:950;
+      background: linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;
+      box-shadow: var(--shadow);
+      transition: transform .05s ease, opacity .15s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.secondary{
+      background:#fff;color:var(--ink);
+      border:1px solid var(--line);
+      box-shadow:none;
+      font-weight:900;
+    }
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+
     .empty{
       padding:12px;border:1px dashed var(--line);
       border-radius:16px;background:#fff;
       color:var(--muted);font-size:12px;line-height:1.3
     }
 
-    /* Basket */
-    .basketSticky{
+    /* Basket: desktop card + mobile bottom sheet */
+    .basketWrap{
       position:sticky;
       bottom:10px;
       z-index:30;
@@ -186,16 +270,16 @@
       padding:12px;border-radius:16px;border:1px solid var(--line);
       background:#fff;
     }
-    .cartName{font-weight:900;line-height:1.2}
+    .cartName{font-weight:950;line-height:1.2}
     .cartSub{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.25}
     .cartOpts{margin-top:6px;color:#374151;font-size:12px;line-height:1.25}
     .qty{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .iconBtn{
       width:34px;height:34px;border-radius:12px;border:1px solid var(--line);
-      background:#fff;cursor:pointer;font-weight:900;
+      background:#fff;cursor:pointer;font-weight:950;
       user-select:none;
     }
-    .totals{display:flex;justify-content:space-between;font-weight:900;margin-top:10px}
+    .totals{display:flex;justify-content:space-between;font-weight:950;margin-top:10px}
     textarea{
       width:100%; min-height:70px;
       border:1px solid var(--line);
@@ -206,27 +290,95 @@
       outline:none;
     }
 
+    /* Mobile basket bar */
+    .basketBar{
+      position:fixed;
+      left:0; right:0;
+      bottom:0;
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-top:1px solid var(--line);
+      z-index:80;
+      display:flex;
+      justify-content:center;
+    }
+    .basketBarInner{
+      width:min(1120px, 100%);
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      box-shadow: var(--shadow);
+    }
+    .basketBarLeft{display:flex;flex-direction:column;gap:2px;min-width:0}
+    .basketBarLeft b{font-size:13px}
+    .basketBarLeft span{font-size:12px;color:var(--muted)}
+    .basketOpenBtn{padding:10px 12px}
+
+    /* Basket modal (mobile) */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background: rgba(15,23,42,.35);
+      z-index:90;
+      display:none;
+    }
+    .modalBackdrop.show{display:block}
+    .modal{
+      position:fixed;
+      left:0; right:0;
+      bottom:0;
+      z-index:100;
+      background:#fff;
+      border-radius: 22px 22px 0 0;
+      border:1px solid var(--line);
+      box-shadow: var(--shadow);
+      transform: translateY(110%);
+      transition: transform .22s ease;
+      max-height: 82vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .modal.show{transform: translateY(0)}
+    .modalHd{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .grabber{
+      width:46px;height:5px;border-radius:999px;
+      background:#e5e7eb;
+      margin:0 auto 8px;
+    }
+    .modalBd{padding:14px;overflow:auto}
+
     .toast{
-      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      position:fixed; left:50%; bottom:84px; transform:translateX(-50%);
       background:#111827; color:#fff;
       padding:10px 12px; border-radius:12px;
       opacity:0; pointer-events:none; transition:.2s;
       max-width:92vw;
-      z-index:999;
+      z-index:120;
     }
     .toast.show{opacity:1}
 
+    /* Desktop tweaks */
     @media (min-width: 980px){
-      h1{font-size:18px}
-      .sub{font-size:13px}
+      .wrap{padding:14px 18px}
+      .brandName{font-size:20px}
+      .tagline{font-size:13px}
       .pill{padding:10px 12px;font-size:13px}
       .page{
         padding:18px;
         grid-template-columns: 1.2fr .8fr;
         gap:18px;
         align-items:start;
+        padding-bottom: 18px;
       }
-      .basketSticky{position:sticky; top:88px; bottom:auto}
+      .basketWrap{position:sticky; top:88px; bottom:auto}
+      .basketBar{display:none}
+      .toast{bottom:18px}
       .hd{padding:16px 16px 12px}
       .bd{padding:16px}
       .sectionTitle{font-size:16px}
@@ -241,9 +393,9 @@
   <div class="wrap topbar">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
-      <div style="min-width:0">
-        <h1>Just Jame</h1>
-        <div class="sub">Pick options → add to basket → place order.</div>
+      <div class="brandText">
+        <h1 class="brandName">Just Jame</h1>
+        <div class="tagline">DID SOMEBODY SAY <span>JUST JAME?</span></div>
       </div>
     </div>
 
@@ -259,20 +411,21 @@
     <div class="hd">
       <div>
         <p class="sectionTitle">Restaurants</p>
-        <p class="sectionDesc">Select options (if any), then press Add. One restaurant per order.</p>
+        <p class="sectionDesc">Tap a restaurant to open it. Choose options, then Add.</p>
+        <div class="chips" id="chips"></div>
       </div>
-      <span class="pill" id="menuCount">0</span>
+      <span class="pill" id="menuCount">0 live</span>
     </div>
     <div class="bd">
       <div class="restList" id="restaurants"></div>
       <div style="margin-top:12px" class="empty">
-        Admin: you edit the menu in Firebase → Firestore → Data.
+        Admin: edit the menu in Firebase → Firestore → Data.
       </div>
     </div>
   </main>
 
-  <aside class="basketSticky">
-    <div class="card">
+  <aside class="basketWrap">
+    <div class="card" id="basketCard">
       <div class="hd">
         <div>
           <p class="sectionTitle">Basket</p>
@@ -280,7 +433,7 @@
         </div>
         <span class="pill" id="cartCount">0 items</span>
       </div>
-      <div class="bd">
+      <div class="bd" id="basketBody">
         <div class="cartList" id="cart"></div>
 
         <div class="totals">
@@ -298,11 +451,37 @@
         </div>
 
         <p class="sub" style="margin:10px 2px 0;color:var(--muted)">
-          Orders are saved to Firestore (<b>orders</b>).
+          Orders are saved to Firestore (<b>orders</b>). Telegram comes next.
         </p>
       </div>
     </div>
   </aside>
+</div>
+
+<!-- Mobile basket bar -->
+<div class="basketBar" id="basketBar">
+  <div class="basketBarInner">
+    <div class="basketBarLeft">
+      <b id="basketBarTitle">Basket</b>
+      <span id="basketBarMeta">0 items · £0.00</span>
+    </div>
+    <button class="btn basketOpenBtn" id="openBasketBtn">Open</button>
+  </div>
+</div>
+
+<!-- Mobile basket modal -->
+<div class="modalBackdrop" id="modalBackdrop"></div>
+<div class="modal" id="basketModal" aria-hidden="true">
+  <div class="modalHd">
+    <div style="flex:1">
+      <div class="grabber"></div>
+      <b>Basket</b>
+    </div>
+    <button class="btn secondary" id="closeBasketBtn">Close</button>
+  </div>
+  <div class="modalBd" id="modalBody">
+    <!-- basket content is cloned in here on open -->
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -315,7 +494,6 @@
     query, orderBy
   } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-  // Your Firebase project
   const firebaseConfig = {
     apiKey: "AIzaSyAy_584m9VYEQbxg6j0T_YQHS8WPMuvrN4",
     authDomain: "justjame-f44db.firebaseapp.com",
@@ -332,12 +510,25 @@
     statusPill: document.getElementById("statusPill"),
     menuCount: document.getElementById("menuCount"),
     restaurants: document.getElementById("restaurants"),
+    chips: document.getElementById("chips"),
+
     cart: document.getElementById("cart"),
     total: document.getElementById("total"),
     cartCount: document.getElementById("cartCount"),
     note: document.getElementById("note"),
     placeOrderBtn: document.getElementById("placeOrderBtn"),
     clearBtn: document.getElementById("clearBtn"),
+
+    basketBar: document.getElementById("basketBar"),
+    basketBarMeta: document.getElementById("basketBarMeta"),
+    openBasketBtn: document.getElementById("openBasketBtn"),
+
+    modalBackdrop: document.getElementById("modalBackdrop"),
+    basketModal: document.getElementById("basketModal"),
+    closeBasketBtn: document.getElementById("closeBasketBtn"),
+    modalBody: document.getElementById("modalBody"),
+    basketBody: document.getElementById("basketBody"),
+
     toast: document.getElementById("toast"),
     search: document.getElementById("search"),
   };
@@ -345,6 +536,7 @@
   // Cart lines separated by options so “Drink + Diet Coke” ≠ “Drink + Water”
   const cart = new Map();
   let MENU_CACHE = [];
+  let ACTIVE_CHIP = "All";
 
   function toast(msg){
     els.toast.textContent = msg;
@@ -384,6 +576,7 @@
     }
     els.cartCount.textContent = `${items} item${items===1?"":"s"}`;
     els.total.textContent = money(total);
+    els.basketBarMeta.textContent = `${items} item${items===1?"":"s"} · ${money(total)}`;
     return {items, total};
   }
 
@@ -461,13 +654,52 @@
     return rHit || cHit || iHit || oHit;
   }
 
+  function buildChips(menu){
+    // Collect unique category names
+    const set = new Set();
+    for (const r of menu){
+      for (const c of (r.categories||[])){
+        if (c?.name) set.add(c.name);
+      }
+    }
+    const cats = ["All", ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
+
+    els.chips.innerHTML = "";
+    for (const name of cats){
+      const chip = document.createElement("div");
+      chip.className = "chip" + (name === ACTIVE_CHIP ? " active" : "");
+      chip.textContent = name;
+      chip.onclick = () => {
+        ACTIVE_CHIP = name;
+        buildChips(menu);
+        renderMenu(menu, normalize(els.search.value.trim()));
+      };
+      els.chips.appendChild(chip);
+    }
+  }
+
   function renderMenu(menu, q=""){
     els.restaurants.innerHTML = "";
 
     const activeRests = (menu || []).filter(r => r.active !== false);
-    const filtered = q
-      ? activeRests.filter(r => (r.categories || []).some(c => (c.items || []).some(it => itemMatchesQuery(r,c,it,q))))
-      : activeRests;
+
+    // Filter by chip + search
+    const filtered = activeRests
+      .map(r => {
+        const cats = (r.categories || []).map(c => ({...c}));
+        const newR = {...r, categories: cats};
+        if (ACTIVE_CHIP !== "All"){
+          newR.categories = newR.categories.filter(c => c.name === ACTIVE_CHIP);
+        }
+        return newR;
+      })
+      .filter(r => {
+        if (q){
+          return (r.categories || []).some(c => (c.items || []).some(it => itemMatchesQuery(r,c,it,q)));
+        }
+        // If chip filtered everything out, still keep restaurant (but it may show empty categories)
+        return true;
+      });
 
     els.menuCount.textContent = `${filtered.length} live`;
 
@@ -481,17 +713,35 @@
       restEl.className = "rest";
 
       restEl.innerHTML = `
-        <div class="restTop">
-          <div style="min-width:0">
+        <div class="restToggle">
+          <div class="restLeft">
             <p class="restName">${escapeHtml(r.name || "Unnamed")}</p>
             <p class="restMeta">${escapeHtml(r.description || "")}</p>
           </div>
-          <span class="pill good">🟢 Live</span>
+          <div class="chev" aria-label="toggle">⌄</div>
         </div>
-        <div class="cats"></div>
+        <div class="restBody" hidden>
+          <div class="cats"></div>
+        </div>
       `;
 
+      const toggle = restEl.querySelector(".restToggle");
+      const body = restEl.querySelector(".restBody");
+      const chev = restEl.querySelector(".chev");
       const catsEl = restEl.querySelector(".cats");
+
+      // Default: collapsed (better for long menus)
+      toggle.onclick = () => {
+        const open = !body.hasAttribute("hidden");
+        if (open){
+          body.setAttribute("hidden","");
+          chev.classList.remove("open");
+        } else {
+          body.removeAttribute("hidden");
+          chev.classList.add("open");
+        }
+      };
+
       const cats = (r.categories || []).slice().sort((a,b)=>(a.sort ?? 0)-(b.sort ?? 0));
 
       if (cats.length === 0){
@@ -510,14 +760,34 @@
         const catBlock = document.createElement("div");
         catBlock.className = "catBlock";
         catBlock.innerHTML = `
-          <div class="catHead">
+          <div class="catToggle">
             <div class="catName">${escapeHtml(c.name || "Category")}</div>
-            <span class="pill">${visibleItems.length} item${visibleItems.length===1?"":"s"}</span>
+            <div class="catRight">
+              <span class="miniPill">${visibleItems.length} item${visibleItems.length===1?"":"s"}</span>
+              <span class="miniPill">⌄</span>
+            </div>
           </div>
-          <div class="items"></div>
+          <div class="catBody">
+            <div class="items"></div>
+          </div>
         `;
 
+        const catToggle = catBlock.querySelector(".catToggle");
+        const catBody = catBlock.querySelector(".catBody");
         const itemsEl = catBlock.querySelector(".items");
+        const catChevron = catBlock.querySelector(".catRight .miniPill:last-child");
+
+        // Default: open categories when restaurant opened
+        catToggle.onclick = () => {
+          const hidden = catBody.hasAttribute("hidden");
+          if (hidden){
+            catBody.removeAttribute("hidden");
+            catChevron.textContent = "⌄";
+          } else {
+            catBody.setAttribute("hidden","");
+            catChevron.textContent = "›";
+          }
+        };
 
         if (visibleItems.length === 0){
           itemsEl.innerHTML = `<div class="empty">No items in this category.</div>`;
@@ -533,7 +803,10 @@
 
           const optionsHtml = hasOptions ? `
             <div class="optBox">
-              <div class="optTitle">Pick options</div>
+              <div class="optTitle">
+                <span>Pick options</span>
+                <span class="miniPill">${it.options.length} choices</span>
+              </div>
               <div class="optList">
                 ${it.options.map(opt => `
                   <label class="optLabel">
@@ -549,14 +822,32 @@
             <div class="itemMain">
               <div class="itemTitle">${escapeHtml(it.name || "Item")}</div>
               <div class="itemDesc">${escapeHtml(it.desc || "")}</div>
-              <div class="price">${money(Number(it.price || 0))}</div>
+              <div class="itemMetaRow">
+                <span class="price">${money(Number(it.price || 0))}</span>
+                <span class="selectedPill">Selected: <span class="selCount">0</span></span>
+              </div>
               ${optionsHtml}
             </div>
-            <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <div class="actionCol">
               <button class="btn" style="padding:10px 12px">Add</button>
               <span class="pill">${hasOptions ? "✅ pickable" : "simple"}</span>
             </div>
           `;
+
+          // Live "selected" pill count
+          const selectedPill = itemEl.querySelector(".selectedPill");
+          const selCountEl = itemEl.querySelector(".selCount");
+          const checkboxes = [...itemEl.querySelectorAll('input[type="checkbox"]')];
+
+          if (checkboxes.length){
+            const updateSel = () => {
+              const n = checkboxes.filter(cb => cb.checked).length;
+              selCountEl.textContent = String(n);
+              selectedPill.classList.toggle("show", n > 0);
+            };
+            checkboxes.forEach(cb => cb.addEventListener("change", updateSel));
+            updateSel();
+          }
 
           itemEl.querySelector("button").onclick = () => {
             const selectedOptions = [...itemEl.querySelectorAll('input[type="checkbox"]:checked')]
@@ -587,11 +878,9 @@
   async function loadMenu(){
     els.statusPill.textContent = "🟠 Loading…";
 
-    // Restaurants
     const restsSnap = await getDocs(query(collection(db, "restaurants"), orderBy("sort","asc")));
     const rests = restsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    // Categories + items
     for (const r of rests){
       const catsSnap = await getDocs(
         query(collection(db, "restaurants", r.id, "categories"), orderBy("sort","asc"))
@@ -601,7 +890,6 @@
       for (const catDoc of catsSnap.docs){
         const c = { id: catDoc.id, ...catDoc.data(), items: [] };
 
-        // ✅ IMPORTANT: items collection name is literally "items"
         const itemsSnap = await getDocs(
           query(
             collection(db, "restaurants", r.id, "categories", c.id, "items"),
@@ -612,13 +900,15 @@
         c.items = itemsSnap.docs.map(itDoc => ({ id: itDoc.id, ...itDoc.data() }));
         categories.push(c);
       }
-
       r.categories = categories;
     }
 
     MENU_CACHE = rests;
+    buildChips(MENU_CACHE);
     renderMenu(MENU_CACHE, normalize(els.search.value.trim()));
     els.statusPill.textContent = "🟢 Ready";
+    els.statusPill.classList.remove("bad");
+    els.statusPill.classList.add("good");
   }
 
   async function placeOrder(){
@@ -628,7 +918,7 @@
       return;
     }
 
-    // One restaurant per order
+    // One restaurant per order (keeps Telegram message clean)
     const rids = new Set([...cart.values()].map(i => i.rid));
     if (rids.size !== 1){
       toast("One restaurant per order, please.");
@@ -662,6 +952,7 @@
       cart.clear();
       els.note.value = "";
       renderCart();
+      closeBasket();
     } catch (e){
       console.error(e);
       toast("Order failed. Check console.");
@@ -671,10 +962,48 @@
     }
   }
 
+  // Mobile basket modal helpers
+  function openBasket(){
+    // Clone the basket body into modal
+    els.modalBody.innerHTML = "";
+    const clone = els.basketBody.cloneNode(true);
+    clone.id = "basketBodyClone";
+    els.modalBody.appendChild(clone);
+
+    // Wire buttons inside clone to call original functions
+    const placeBtn = clone.querySelector("#placeOrderBtn");
+    const clearBtn = clone.querySelector("#clearBtn");
+    const note = clone.querySelector("#note");
+
+    // Keep note synced
+    note.value = els.note.value;
+    note.addEventListener("input", () => els.note.value = note.value);
+
+    placeBtn.onclick = placeOrder;
+    clearBtn.onclick = () => { cart.clear(); els.note.value=""; renderCart(); toast("Cleared."); };
+
+    els.modalBackdrop.classList.add("show");
+    els.basketModal.classList.add("show");
+    els.basketModal.setAttribute("aria-hidden","false");
+  }
+
+  function closeBasket(){
+    els.modalBackdrop.classList.remove("show");
+    els.basketModal.classList.remove("show");
+    els.basketModal.setAttribute("aria-hidden","true");
+  }
+
   // Wire UI
   els.placeOrderBtn.onclick = placeOrder;
-  els.clearBtn.onclick = () => { cart.clear(); renderCart(); toast("Cleared."); };
+  els.clearBtn.onclick = () => { cart.clear(); els.note.value=""; renderCart(); toast("Cleared."); };
   els.search.addEventListener("input", () => renderMenu(MENU_CACHE, normalize(els.search.value.trim())));
+
+  els.openBasketBtn.onclick = openBasket;
+  els.closeBasketBtn.onclick = closeBasket;
+  els.modalBackdrop.onclick = closeBasket;
+
+  // Allow swipe-down-ish escape on mobile (simple)
+  window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeBasket(); });
 
   renderCart();
 
