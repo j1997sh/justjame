@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Just Jame</title>
   <meta name="theme-color" content="#ff7a00" />
   <style>
@@ -14,13 +14,14 @@
       --brand:#ff7a00;
       --brand2:#ff9a3d;
       --line:#f3e7dc;
-      --shadow: 0 10px 25px rgba(16,24,40,.08);
+      --shadow: 0 10px 25px rgba(16,24,40,.10);
       --radius: 18px;
-      --radius2: 24px;
+      --radius2: 22px;
       --good:#16a34a;
       --warn:#f59e0b;
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
@@ -32,20 +33,21 @@
     }
     a{color:inherit}
     header{
-      position:sticky; top:0; z-index:20;
-      background: rgba(255,255,255,.86);
+      position:sticky; top:0; z-index:50;
+      background: rgba(255,255,255,.88);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .wrap{max-width:1120px;margin:0 auto;padding:14px 16px}
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .brand{display:flex;gap:10px;align-items:center;min-width:240px}
+    .wrap{max-width:1120px;margin:0 auto;padding:12px 14px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:10px;align-items:center;min-width:0}
     .logo{
-      width:42px;height:42px;border-radius:14px;
+      width:40px;height:40px;border-radius:14px;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
+      flex:0 0 auto;
     }
     .logo:after{
       content:"";
@@ -53,59 +55,62 @@
       background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 60%);
       transform: rotate(20deg);
     }
-    h1{font-size:18px;margin:0;letter-spacing:.2px}
-    .sub{color:var(--muted);font-size:13px;margin-top:2px}
+    h1{font-size:16px;margin:0;letter-spacing:.2px;line-height:1.1}
+    .sub{color:var(--muted);font-size:12px;margin-top:2px;line-height:1.2}
     .pill{
       display:inline-flex;gap:8px;align-items:center;
-      padding:10px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);
+      padding:8px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);
       box-shadow: 0 1px 0 rgba(16,24,40,.04);
-      font-size:13px;color:var(--muted);
+      font-size:12px;color:var(--muted);
       white-space:nowrap;
     }
     .btn{
       border:0; cursor:pointer;
       border-radius:999px;
       padding:11px 14px;
-      font-weight:800;
+      font-weight:900;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       color:#fff;
       box-shadow: var(--shadow);
-      transition: transform .05s ease;
+      transition: transform .05s ease, opacity .15s ease;
+      user-select:none;
     }
     .btn:active{transform: translateY(1px)}
     .btn.secondary{
       background:#fff;color:var(--ink);
       border:1px solid var(--line);
       box-shadow:none;
-      font-weight:700;
+      font-weight:800;
     }
-    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
     .searchRow{
-      display:flex;gap:10px;align-items:center;flex:1;min-width:240px;justify-content:flex-end
+      display:flex;gap:10px;align-items:center;justify-content:flex-end;flex:1;min-width:0
     }
     .search{
-      flex:1; max-width:420px; min-width:220px;
+      flex:1;
       border:1px solid var(--line);
       background:#fff;
       border-radius:999px;
-      padding:11px 14px;
+      padding:10px 12px;
       font:inherit;
       outline:none;
+      min-width:0;
     }
-    .grid{
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:18px;
-      padding:18px 16px;
+
+    /* Mobile-first layout:
+       - stacked (menu then basket)
+       - basket becomes sticky at bottom as a "sheet" feel
+    */
+    .page{
       max-width:1120px;
       margin:0 auto;
-      align-items:start;
+      padding:14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
     }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-      .cart{position:static !important}
-      .searchRow{justify-content:stretch}
-    }
+
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -114,57 +119,126 @@
       overflow:hidden;
     }
     .card .hd{
-      padding:16px 16px 12px;
+      padding:14px 14px 10px;
       border-bottom:1px solid var(--line);
-      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
     }
-    .card .bd{padding:16px}
-    .sectionTitle{font-size:16px;margin:0 0 4px}
-    .sectionDesc{margin:0;color:var(--muted);font-size:13px}
-    .restList{display:flex;flex-direction:column;gap:14px}
+    .card .bd{padding:14px}
+    .sectionTitle{font-size:15px;margin:0 0 4px}
+    .sectionDesc{margin:0;color:var(--muted);font-size:12px;line-height:1.3}
+
+    .restList{display:flex;flex-direction:column;gap:12px}
     .rest{
-      padding:14px;
+      padding:12px;
       border:1px solid var(--line);
       border-radius: 18px;
       background: #fff;
     }
-    .restTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-    .restName{font-size:16px;margin:0}
-    .restMeta{color:var(--muted);font-size:13px;margin:4px 0 0}
+    .restTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .restName{font-size:15px;margin:0;line-height:1.2}
+    .restMeta{color:var(--muted);font-size:12px;margin:4px 0 0;line-height:1.3}
     .badge{
       display:inline-flex;align-items:center;gap:6px;
-      padding:8px 10px;border-radius:999px;
+      padding:7px 9px;border-radius:999px;
       border:1px solid var(--line);
       background:#fff;
       color:var(--muted);
-      font-size:12px;
+      font-size:11px;
       white-space:nowrap;
     }
     .badge.good{color:var(--good)}
     .badge.warn{color:var(--warn)}
-    .items{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}
+    .cats{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .catBlock{
+      border-top:1px dashed var(--line);
+      padding-top:10px;
+    }
+    .catHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .catName{
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+    .items{display:grid;grid-template-columns:1fr;gap:10px}
     .item{
-      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
       padding:12px;border-radius:16px;border:1px solid var(--line);
       background: #fffdfb;
     }
-    .item b{display:block}
-    .item small{color:var(--muted)}
+    .itemMain{min-width:0;flex:1}
+    .itemTitle{font-weight:900}
+    .itemDesc{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.35}
+    .itemMetaRow{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
     .price{font-weight:900}
-    .cart{position:sticky; top:88px}
+    .optBox{
+      margin-top:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:14px;
+      padding:10px;
+    }
+    .optTitle{font-size:12px;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;gap:10px}
+    .optList{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:8px;
+    }
+    .optLabel{
+      display:flex;gap:8px;align-items:flex-start;
+      font-size:13px;
+      line-height:1.2;
+      user-select:none;
+    }
+    .optLabel input{margin-top:2px}
+
+    .actionCol{display:flex;flex-direction:column;gap:10px;align-items:flex-end;flex:0 0 auto}
+    .mini{
+      font-size:11px;color:var(--muted);text-align:right;line-height:1.2
+    }
+
+    .empty{
+      padding:12px;border:1px dashed var(--line);
+      border-radius:16px;background:#fff;
+      color:var(--muted);font-size:12px;line-height:1.3
+    }
+
+    /* Basket */
+    .basketSticky{
+      position:sticky;
+      bottom: 10px;
+      z-index: 30;
+    }
+    .basketCard{
+      border-radius: 22px;
+    }
     .cartList{display:flex;flex-direction:column;gap:10px}
     .cartRow{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
       padding:12px;border-radius:16px;border:1px solid var(--line); background:#fff;
     }
-    .qty{display:flex;align-items:center;gap:8px}
+    .cartName{font-weight:900;line-height:1.2}
+    .cartSub{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.25}
+    .cartOpts{margin-top:6px;color:#374151;font-size:12px;line-height:1.25}
+    .qty{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .iconBtn{
       width:34px;height:34px;border-radius:12px;border:1px solid var(--line);
       background:#fff;cursor:pointer;font-weight:900;
+      user-select:none;
     }
     .totals{display:flex;justify-content:space-between;font-weight:900;margin-top:10px}
     textarea{
-      width:100%; min-height:72px;
+      width:100%; min-height:70px;
       border:1px solid var(--line);
       border-radius: 16px;
       padding:10px 12px;
@@ -178,84 +252,100 @@
       padding:10px 12px; border-radius:12px;
       opacity:0; pointer-events:none; transition:.2s;
       max-width:92vw;
+      z-index: 999;
     }
     .toast.show{opacity:1}
-    .divider{height:1px;background:var(--line);margin:14px 0}
-    .muted{color:var(--muted);font-size:13px}
-    .empty{
-      padding:14px;border:1px dashed var(--line);
-      border-radius:16px;background:#fff;
-      color:var(--muted);font-size:13px
+    .divider{height:1px;background:var(--line);margin:12px 0}
+
+    /* Desktop: 2 columns */
+    @media (min-width: 980px){
+      header .wrap{padding:14px 18px}
+      h1{font-size:18px}
+      .sub{font-size:13px}
+      .pill{padding:10px 12px;font-size:13px}
+      .page{
+        padding:18px;
+        grid-template-columns: 1.2fr .8fr;
+        gap:18px;
+        align-items:start;
+      }
+      .basketSticky{position:sticky; top:88px; bottom:auto}
+      .card .hd{padding:16px 16px 12px}
+      .card .bd{padding:16px}
+      .sectionTitle{font-size:16px}
+      .sectionDesc{font-size:13px}
+      .search{padding:11px 14px}
     }
   </style>
 </head>
-<body>
 
+<body>
 <header>
   <div class="wrap topbar">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
-      <div>
+      <div style="min-width:0">
         <h1>Just Jame</h1>
-        <div class="sub">Order from your favourites. Notify Jame on Telegram.</div>
+        <div class="sub">Link-only ordering. Picks saved. Jame gets pinged on Telegram.</div>
       </div>
     </div>
 
     <div class="searchRow">
-      <input id="search" class="search" placeholder="Search restaurants or items…" />
+      <input id="search" class="search" placeholder="Search restaurants, categories, items, options…" />
       <span class="pill" id="statusPill">🟠 Connecting…</span>
     </div>
   </div>
 </header>
 
-<div class="grid">
+<div class="page">
   <main class="card">
     <div class="hd">
       <div>
         <p class="sectionTitle">Restaurants</p>
-        <p class="sectionDesc">Pick a place, add items to your basket, then place order.</p>
+        <p class="sectionDesc">Tap options (if any), then press Add. One restaurant per order.</p>
       </div>
-      <span class="badge good" title="Link-only project">🔗 Link-only</span>
+      <span class="badge good" title="Menu is stored in Firestore">🔥 Live</span>
     </div>
     <div class="bd">
       <div class="restList" id="restaurants"></div>
 
       <div class="divider"></div>
-
-      <div class="muted">
-        You add/edit restaurants and items in the Firebase Console (Firestore → Data).
+      <div class="empty">
+        Admin note: you add/edit menu in Firebase → Firestore → Data.
       </div>
     </div>
   </main>
 
-  <aside class="card cart">
-    <div class="hd">
-      <div>
-        <p class="sectionTitle">Basket</p>
-        <p class="sectionDesc">One restaurant per order (keeps it simple).</p>
+  <aside class="basketSticky">
+    <div class="card basketCard">
+      <div class="hd">
+        <div>
+          <p class="sectionTitle">Basket</p>
+          <p class="sectionDesc">Review picks, add a note, then place order.</p>
+        </div>
+        <span class="pill" id="cartCount">0 items</span>
       </div>
-      <span class="pill" id="cartCount">0 items</span>
-    </div>
-    <div class="bd">
-      <div class="cartList" id="cart"></div>
+      <div class="bd">
+        <div class="cartList" id="cart"></div>
 
-      <div class="totals">
-        <span>Total</span>
-        <span id="total">£0.00</span>
+        <div class="totals">
+          <span>Total</span>
+          <span id="total">£0.00</span>
+        </div>
+
+        <div style="margin-top:12px">
+          <textarea id="note" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn" id="placeOrderBtn" style="flex:1">Place order</button>
+          <button class="btn secondary" id="clearBtn">Clear</button>
+        </div>
+
+        <p class="sub" style="margin:10px 2px 0;color:var(--muted)">
+          Orders are saved to Firestore (<b>orders</b>). Your Firebase Function can Telegram you.
+        </p>
       </div>
-
-      <div style="margin-top:12px">
-        <textarea id="note" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
-      </div>
-
-      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-        <button class="btn" id="placeOrderBtn" style="flex:1">Place order</button>
-        <button class="btn secondary" id="clearBtn">Clear</button>
-      </div>
-
-      <p class="muted" style="margin-top:10px">
-        When you place an order, Firebase will create an <b>orders</b> doc — your Cloud Function will Telegram you.
-      </p>
     </div>
   </aside>
 </div>
@@ -263,13 +353,12 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  // Firebase via CDN (works in a single HTML file on GitHub Pages)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
   import {
     getFirestore, collection, getDocs, addDoc, query, orderBy
   } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-  // ✅ YOUR CONFIG (you pasted this from Firebase)
+  // ✅ Your Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyAy_584m9VYEQbxg6j0T_YQHS8WPMuvrN4",
     authDomain: "justjame-f44db.firebaseapp.com",
@@ -295,20 +384,41 @@
     search: document.getElementById("search"),
   };
 
-  const cart = new Map(); // key: `${rid}__${itemName}`
+  // Cart key includes options so “Drink + Diet Coke” and “Drink + Coke” can be separate lines
+  const cart = new Map(); // key: `${rid}__${itemName}__${optsKey}`
+
+  // Cached menu for searching
+  let MENU_CACHE = [];
 
   function toast(msg){
     els.toast.textContent = msg;
     els.toast.classList.add("show");
     setTimeout(()=>els.toast.classList.remove("show"), 2200);
   }
-  function money(n){ return "£" + Number(n).toFixed(2); }
+
   function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[m]));
   }
-  function keyOf(it){ return `${it.rid}__${it.name}`; }
+
+  function money(n){
+    return "£" + Number(n || 0).toFixed(2);
+  }
+
+  function normalize(s){
+    return String(s ?? "").toLowerCase();
+  }
+
+  function optsKey(options){
+    if (!Array.isArray(options) || options.length === 0) return "";
+    // stable key
+    return options.slice().sort((a,b)=>String(a).localeCompare(String(b))).join("||");
+  }
+
+  function cartKey(it){
+    return `${it.rid}__${it.name}__${optsKey(it.options)}`;
+  }
 
   function cartSummary(){
     let items = 0;
@@ -324,6 +434,7 @@
 
   function renderCart(){
     els.cart.innerHTML = "";
+
     if (cart.size === 0){
       els.cart.innerHTML = `<div class="empty">Your basket is empty. Add something tasty 👇</div>`;
       cartSummary();
@@ -333,10 +444,16 @@
     for (const it of cart.values()){
       const row = document.createElement("div");
       row.className = "cartRow";
+
+      const opts = (it.options && it.options.length)
+        ? `<div class="cartOpts"><b>Picked:</b> ${escapeHtml(it.options.join(", "))}</div>`
+        : "";
+
       row.innerHTML = `
         <div style="min-width:0">
-          <b>${escapeHtml(it.name)}</b>
-          <small class="muted">${escapeHtml(it.restaurantName)} · ${money(it.price)}</small>
+          <div class="cartName">${escapeHtml(it.name)}</div>
+          <div class="cartSub">${escapeHtml(it.restaurantName)} · ${money(it.price)}</div>
+          ${opts}
         </div>
         <div class="qty">
           <button class="iconBtn" aria-label="decrease">−</button>
@@ -344,39 +461,70 @@
           <button class="iconBtn" aria-label="increase">+</button>
         </div>
       `;
+
       const [dec, inc] = row.querySelectorAll("button");
-      dec.onclick = () => { it.qty--; if (it.qty<=0) cart.delete(keyOf(it)); renderCart(); };
-      inc.onclick = () => { it.qty++; renderCart(); };
+      dec.onclick = () => {
+        it.qty -= 1;
+        if (it.qty <= 0) cart.delete(cartKey(it));
+        renderCart();
+      };
+      inc.onclick = () => {
+        it.qty += 1;
+        renderCart();
+      };
+
       els.cart.appendChild(row);
     }
+
     cartSummary();
   }
 
-  function addToCart({rid, restaurantName, name, price}){
-    const key = `${rid}__${name}`;
+  function addToCart({rid, restaurantName, name, price, options}){
+    const item = {
+      rid,
+      restaurantName,
+      name,
+      price: Number(price || 0),
+      options: Array.isArray(options) ? options : [],
+      qty: 1,
+    };
+    const key = cartKey(item);
     const existing = cart.get(key);
     if (existing) existing.qty += 1;
-    else cart.set(key, {rid, restaurantName, name, price, qty: 1});
+    else cart.set(key, item);
     renderCart();
   }
 
-  let MENU_CACHE = []; // used for search filtering
-
   function applySearch(){
-    const q = els.search.value.trim().toLowerCase();
+    const q = normalize(els.search.value.trim());
     renderMenu(MENU_CACHE, q);
+  }
+
+  function itemMatchesQuery(r, c, it, q){
+    if (!q) return true;
+
+    const rHit = normalize(r.name).includes(q) || normalize(r.description).includes(q);
+    const cHit = normalize(c.name).includes(q);
+    const iHit = normalize(it.name).includes(q) || normalize(it.desc).includes(q);
+
+    const oHit = Array.isArray(it.options) && it.options.some(o => normalize(o).includes(q));
+
+    return rHit || cHit || iHit || oHit;
   }
 
   function renderMenu(menu, q=""){
     els.restaurants.innerHTML = "";
 
-    const filtered = (q ? menu.filter(r => {
-      const inRest = (r.name||"").toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
-      const inItems = (r.items||[]).some(it =>
-        (it.name||"").toLowerCase().includes(q) || (it.desc||"").toLowerCase().includes(q)
-      );
-      return inRest || inItems;
-    }) : menu);
+    const activeRests = (menu || []).filter(r => r.active !== false);
+
+    const filtered = q
+      ? activeRests.filter(r => {
+          // keep restaurant if any category/item matches
+          return (r.categories || []).some(c =>
+            (c.items || []).some(it => itemMatchesQuery(r, c, it, q))
+          );
+        })
+      : activeRests;
 
     if (filtered.length === 0){
       els.restaurants.innerHTML = `<div class="empty">No matches. Try a different search.</div>`;
@@ -384,87 +532,154 @@
     }
 
     for (const r of filtered){
-      if (r.active === false) continue;
+      const restEl = document.createElement("div");
+      restEl.className = "rest";
 
-      const card = document.createElement("div");
-      card.className = "rest";
-      card.innerHTML = `
+      restEl.innerHTML = `
         <div class="restTop">
           <div style="min-width:0">
             <p class="restName">${escapeHtml(r.name || "Unnamed")}</p>
             <p class="restMeta">${escapeHtml(r.description || "")}</p>
-            <p class="restMeta"><span class="badge">ID: ${escapeHtml(r.id)}</span></p>
           </div>
           <span class="badge warn">⏱️ 25–45 min</span>
         </div>
-        <div class="items"></div>
+        <div class="cats"></div>
       `;
 
-      const itemsEl = card.querySelector(".items");
-      const items = (r.items || []).filter(it => it.available !== false);
+      const catsEl = restEl.querySelector(".cats");
+      const cats = (r.categories || []).slice().sort((a,b)=>(a.sort ?? 0)-(b.sort ?? 0));
 
-      if (items.length === 0){
-        itemsEl.innerHTML = `<div class="empty">No items yet.</div>`;
-      } else {
-        for (const it of items){
-          // If searching, hide items that don't match (but keep restaurant if restaurant matched)
-          if (q){
-            const hit = (it.name||"").toLowerCase().includes(q) || (it.desc||"").toLowerCase().includes(q);
-            const restHit = (r.name||"").toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
-            if (!hit && !restHit) continue;
-          }
+      if (cats.length === 0){
+        catsEl.innerHTML = `<div class="empty">No categories yet.</div>`;
+        els.restaurants.appendChild(restEl);
+        continue;
+      }
 
-          const row = document.createElement("div");
-          row.className = "item";
-          row.innerHTML = `
-            <div style="min-width:0">
-              <b>${escapeHtml(it.name || "Item")}</b>
-              <small>${escapeHtml(it.desc || "")}</small>
+      for (const c of cats){
+        // If searching, skip categories that have no visible items
+        const visibleItems = (c.items || []).filter(it => it.available !== false)
+          .filter(it => itemMatchesQuery(r, c, it, q));
+
+        if (q && visibleItems.length === 0) continue;
+
+        const catBlock = document.createElement("div");
+        catBlock.className = "catBlock";
+        catBlock.innerHTML = `
+          <div class="catHead">
+            <div class="catName">${escapeHtml(c.name || "Category")}</div>
+            <span class="badge">🍽️</span>
+          </div>
+          <div class="items"></div>
+        `;
+
+        const itemsEl = catBlock.querySelector(".items");
+
+        if (visibleItems.length === 0){
+          itemsEl.innerHTML = `<div class="empty">No items in this category.</div>`;
+          catsEl.appendChild(catBlock);
+          continue;
+        }
+
+        for (const it of visibleItems){
+          const itemEl = document.createElement("div");
+          itemEl.className = "item";
+
+          const hasOptions = Array.isArray(it.options) && it.options.length > 0;
+
+          const optionsHtml = hasOptions ? `
+            <div class="optBox">
+              <div class="optTitle">
+                <span>Pick options (tap to select)</span>
+                <span class="pill" style="padding:6px 10px">${it.options.length} choices</span>
+              </div>
+              <div class="optList">
+                ${it.options.map(opt => `
+                  <label class="optLabel">
+                    <input type="checkbox" data-option="${escapeHtml(opt)}" />
+                    <span>${escapeHtml(opt)}</span>
+                  </label>
+                `).join("")}
+              </div>
             </div>
-            <div style="display:flex;gap:10px;align-items:center">
-              <span class="price">${money(Number(it.price || 0))}</span>
+          ` : "";
+
+          itemEl.innerHTML = `
+            <div class="itemMain">
+              <div class="itemTitle">${escapeHtml(it.name || "Item")}</div>
+              <div class="itemDesc">${escapeHtml(it.desc || "")}</div>
+              <div class="itemMetaRow">
+                <span class="price">${money(Number(it.price || 0))}</span>
+                ${hasOptions ? `<span class="badge">✅ pickable</span>` : `<span class="badge">simple</span>`}
+              </div>
+              ${optionsHtml}
+            </div>
+            <div class="actionCol">
               <button class="btn" style="padding:10px 12px">Add</button>
+              <div class="mini">${hasOptions ? "Pick options first" : "Adds 1"}</div>
             </div>
           `;
-          row.querySelector("button").onclick = () => {
+
+          itemEl.querySelector("button").onclick = () => {
+            const selectedOptions = [...itemEl.querySelectorAll('input[type="checkbox"]:checked')]
+              .map(cb => cb.getAttribute("data-option"))
+              .filter(Boolean);
+
             addToCart({
               rid: r.id,
               restaurantName: r.name || "Restaurant",
               name: it.name || "Item",
               price: Number(it.price || 0),
+              options: selectedOptions
             });
+
             toast("Added to basket ✅");
           };
-          itemsEl.appendChild(row);
+
+          itemsEl.appendChild(itemEl);
         }
+
+        catsEl.appendChild(catBlock);
       }
 
-      els.restaurants.appendChild(card);
+      els.restaurants.appendChild(restEl);
     }
   }
 
   async function loadMenu(){
     els.statusPill.textContent = "🟠 Loading menu…";
-    els.statusPill.style.color = "var(--muted)";
 
-    // 1) restaurants
-    const restsSnap = await getDocs(query(collection(db, "restaurants"), orderBy("sort", "asc")));
-    const rests = [];
-    restsSnap.forEach(d => rests.push({id: d.id, ...d.data()}));
+    // Restaurants
+    const restsSnap = await getDocs(query(collection(db, "restaurants"), orderBy("sort","asc")));
+    const rests = restsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    // 2) items per restaurant
+    // Categories + Items per category
     for (const r of rests){
-      const itemsSnap = await getDocs(query(collection(db, "restaurants", r.id, "items"), orderBy("sort","asc")));
-      const items = [];
-      itemsSnap.forEach(d => items.push({id: d.id, ...d.data()}));
-      r.items = items;
+      const catsSnap = await getDocs(
+        query(collection(db, "restaurants", r.id, "categories"), orderBy("sort","asc"))
+      );
+
+      const categories = [];
+      for (const catDoc of catsSnap.docs){
+        const c = { id: catDoc.id, ...catDoc.data(), items: [] };
+
+        const itemsSnap = await getDocs(
+          query(
+            collection(db, "restaurants", r.id, "categories", c.id, "items"),
+            orderBy("sort","asc")
+          )
+        );
+
+        c.items = itemsSnap.docs.map(itDoc => ({ id: itDoc.id, ...itDoc.data() }));
+        categories.push(c);
+      }
+
+      r.categories = categories;
     }
 
     MENU_CACHE = rests;
-    renderMenu(MENU_CACHE, els.search.value.trim().toLowerCase());
+    renderMenu(MENU_CACHE, normalize(els.search.value.trim()));
 
     els.statusPill.textContent = "🟢 Ready";
-    els.statusPill.style.color = "var(--muted)";
 
     if (rests.length === 0){
       els.restaurants.innerHTML = `<div class="empty">
@@ -481,13 +696,13 @@
     }
 
     // One restaurant per order
-    const uniqueRids = new Set([...cart.values()].map(i => i.rid));
-    if (uniqueRids.size !== 1){
+    const rids = new Set([...cart.values()].map(i => i.rid));
+    if (rids.size !== 1){
       toast("One restaurant per order, please.");
       return;
     }
 
-    const rid = [...uniqueRids][0];
+    const rid = [...rids][0];
     const restaurantName = [...cart.values()][0].restaurantName;
 
     const payload = {
@@ -495,9 +710,14 @@
       status: "new",
       restaurantId: rid,
       restaurantName,
-      items: [...cart.values()].map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+      items: [...cart.values()].map(i => ({
+        name: i.name,
+        price: i.price,
+        qty: i.qty,
+        options: Array.isArray(i.options) ? i.options : []
+      })),
       note: els.note.value.trim(),
-      total,
+      total
     };
 
     els.placeOrderBtn.disabled = true;
@@ -506,6 +726,7 @@
     try{
       await addDoc(collection(db, "orders"), payload);
       toast("Order sent! ✅");
+
       cart.clear();
       els.note.value = "";
       renderCart();
@@ -524,7 +745,6 @@
 
   renderCart();
 
-  // Boot
   try{
     await loadMenu();
   } catch (e){
@@ -533,6 +753,5 @@
     toast("Firebase error. Check console.");
   }
 </script>
-
 </body>
 </html>
