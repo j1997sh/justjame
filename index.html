@@ -4,83 +4,117 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Just Jame</title>
+  <meta name="theme-color" content="#ff7a00" />
   <style>
     :root{
       --bg:#fff7f0;
       --card:#ffffff;
-      --ink:#1f2328;
-      --muted:#667085;
+      --ink:#111827;
+      --muted:#6b7280;
       --brand:#ff7a00;
       --brand2:#ff9a3d;
-      --line:#f0e6dd;
+      --line:#f3e7dc;
       --shadow: 0 10px 25px rgba(16,24,40,.08);
       --radius: 18px;
+      --radius2: 24px;
+      --good:#16a34a;
+      --warn:#f59e0b;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--ink);
-      background: radial-gradient(1200px 600px at 20% -10%, #ffe4cf 0, transparent 70%),
-                  radial-gradient(900px 500px at 110% 0%, #ffe0c3 0, transparent 60%),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #ffe4cf 0, transparent 70%),
+        radial-gradient(900px 500px at 110% 0%, #ffe0c3 0, transparent 60%),
+        var(--bg);
     }
+    a{color:inherit}
     header{
-      position:sticky; top:0; z-index:10;
-      background: rgba(255,255,255,.85);
+      position:sticky; top:0; z-index:20;
+      background: rgba(255,255,255,.86);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .wrap{max-width:1100px;margin:0 auto;padding:16px 18px}
-    .topbar{display:flex;gap:14px;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center}
+    .wrap{max-width:1120px;margin:0 auto;padding:14px 16px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .brand{display:flex;gap:10px;align-items:center;min-width:240px}
     .logo{
       width:42px;height:42px;border-radius:14px;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    h1{font-size:18px;margin:0}
-    .sub{color:var(--muted);font-size:13px}
+    .logo:after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 60%);
+      transform: rotate(20deg);
+    }
+    h1{font-size:18px;margin:0;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px;margin-top:2px}
     .pill{
       display:inline-flex;gap:8px;align-items:center;
       padding:10px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);
       box-shadow: 0 1px 0 rgba(16,24,40,.04);
-      font-size:14px;
+      font-size:13px;color:var(--muted);
+      white-space:nowrap;
     }
     .btn{
       border:0; cursor:pointer;
       border-radius:999px;
-      padding:10px 14px;
-      font-weight:700;
+      padding:11px 14px;
+      font-weight:800;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       color:#fff;
       box-shadow: var(--shadow);
+      transition: transform .05s ease;
     }
+    .btn:active{transform: translateY(1px)}
     .btn.secondary{
       background:#fff;color:var(--ink);
       border:1px solid var(--line);
       box-shadow:none;
+      font-weight:700;
+    }
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .searchRow{
+      display:flex;gap:10px;align-items:center;flex:1;min-width:240px;justify-content:flex-end
+    }
+    .search{
+      flex:1; max-width:420px; min-width:220px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:11px 14px;
+      font:inherit;
+      outline:none;
     }
     .grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.25fr .75fr;
       gap:18px;
-      padding:18px;
-      max-width:1100px;
+      padding:18px 16px;
+      max-width:1120px;
       margin:0 auto;
+      align-items:start;
     }
-    @media (max-width: 960px){
+    @media (max-width: 980px){
       .grid{grid-template-columns:1fr}
       .cart{position:static !important}
+      .searchRow{justify-content:stretch}
     }
     .card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--radius2);
       box-shadow: var(--shadow);
+      overflow:hidden;
     }
     .card .hd{
-      padding:16px 16px 10px;
+      padding:16px 16px 12px;
       border-bottom:1px solid var(--line);
       display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
     }
@@ -91,44 +125,52 @@
     .rest{
       padding:14px;
       border:1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 18px;
       background: #fff;
     }
     .restTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
     .restName{font-size:16px;margin:0}
     .restMeta{color:var(--muted);font-size:13px;margin:4px 0 0}
+    .badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .badge.good{color:var(--good)}
+    .badge.warn{color:var(--warn)}
     .items{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}
     .item{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
-      padding:12px;border-radius:14px;border:1px solid var(--line);
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      padding:12px;border-radius:16px;border:1px solid var(--line);
       background: #fffdfb;
     }
     .item b{display:block}
     .item small{color:var(--muted)}
-    .qty{
-      display:flex;align-items:center;gap:8px;
+    .price{font-weight:900}
+    .cart{position:sticky; top:88px}
+    .cartList{display:flex;flex-direction:column;gap:10px}
+    .cartRow{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      padding:12px;border-radius:16px;border:1px solid var(--line); background:#fff;
     }
+    .qty{display:flex;align-items:center;gap:8px}
     .iconBtn{
       width:34px;height:34px;border-radius:12px;border:1px solid var(--line);
       background:#fff;cursor:pointer;font-weight:900;
     }
-    .price{font-weight:800}
-    .cart{
-      position:sticky; top:88px;
-    }
-    .cartList{display:flex;flex-direction:column;gap:10px}
-    .cartRow{
-      display:flex;justify-content:space-between;gap:10px;align-items:center;
-      padding:12px;border-radius:14px;border:1px solid var(--line); background:#fff;
-    }
     .totals{display:flex;justify-content:space-between;font-weight:900;margin-top:10px}
     textarea{
-      width:100%; min-height:70px;
+      width:100%; min-height:72px;
       border:1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       padding:10px 12px;
       font:inherit;
       resize:vertical;
+      outline:none;
     }
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
@@ -138,15 +180,13 @@
       max-width:92vw;
     }
     .toast.show{opacity:1}
-    .adminRow{display:flex;gap:10px;flex-wrap:wrap}
-    input{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      padding:10px 12px;
-      font:inherit;
-    }
+    .divider{height:1px;background:var(--line);margin:14px 0}
     .muted{color:var(--muted);font-size:13px}
-    .divider{height:1px;background:var(--line);margin:12px 0}
+    .empty{
+      padding:14px;border:1px dashed var(--line);
+      border-radius:16px;background:#fff;
+      color:var(--muted);font-size:13px
+    }
   </style>
 </head>
 <body>
@@ -157,13 +197,13 @@
       <div class="logo" aria-hidden="true"></div>
       <div>
         <h1>Just Jame</h1>
-        <div class="sub">Tiny delivery service. Big cravings.</div>
+        <div class="sub">Order from your favourites. Notify Jame on Telegram.</div>
       </div>
     </div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
-      <span class="pill" id="authPill">👀 Menu is public</span>
-      <button class="btn secondary" id="signInBtn">Admin sign-in</button>
-      <button class="btn secondary" id="signOutBtn" style="display:none">Sign out</button>
+
+    <div class="searchRow">
+      <input id="search" class="search" placeholder="Search restaurants or items…" />
+      <span class="pill" id="statusPill">🟠 Connecting…</span>
     </div>
   </div>
 </header>
@@ -173,35 +213,17 @@
     <div class="hd">
       <div>
         <p class="sectionTitle">Restaurants</p>
-        <p class="sectionDesc">Pick a place, then add items to your basket.</p>
+        <p class="sectionDesc">Pick a place, add items to your basket, then place order.</p>
       </div>
-      <span class="pill" id="statusPill">🟠 Loading…</span>
+      <span class="badge good" title="Link-only project">🔗 Link-only</span>
     </div>
     <div class="bd">
       <div class="restList" id="restaurants"></div>
 
       <div class="divider"></div>
 
-      <div id="adminPanel" style="display:none">
-        <p class="sectionTitle">Admin</p>
-        <p class="muted">Only you can add/edit. (Protected by Firestore rules.)</p>
-
-        <div class="adminRow" style="margin-top:10px">
-          <input id="restName" placeholder="Restaurant name" />
-          <input id="restDesc" placeholder="Short description" />
-          <button class="btn" id="addRestBtn">Add restaurant</button>
-        </div>
-
-        <div class="adminRow" style="margin-top:10px">
-          <input id="itemRestId" placeholder="Restaurant ID (from list)" />
-          <input id="itemName" placeholder="Item name" />
-          <input id="itemPrice" placeholder="Price (e.g. 7.50)" />
-          <button class="btn" id="addItemBtn">Add item</button>
-        </div>
-
-        <p class="muted" style="margin-top:10px">
-          Tip: restaurant IDs show in the UI right under each restaurant name.
-        </p>
+      <div class="muted">
+        You add/edit restaurants and items in the Firebase Console (Firestore → Data).
       </div>
     </div>
   </main>
@@ -210,7 +232,7 @@
     <div class="hd">
       <div>
         <p class="sectionTitle">Basket</p>
-        <p class="sectionDesc">Review and place your order.</p>
+        <p class="sectionDesc">One restaurant per order (keeps it simple).</p>
       </div>
       <span class="pill" id="cartCount">0 items</span>
     </div>
@@ -223,7 +245,7 @@
       </div>
 
       <div style="margin-top:12px">
-        <textarea id="note" placeholder="Notes (e.g. ‘no onions’, ‘buzz flat 2’)"></textarea>
+        <textarea id="note" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
       </div>
 
       <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
@@ -232,7 +254,7 @@
       </div>
 
       <p class="muted" style="margin-top:10px">
-        When you place an order, Jame gets a Telegram message instantly.
+        When you place an order, Firebase will create an <b>orders</b> doc — your Cloud Function will Telegram you.
       </p>
     </div>
   </aside>
@@ -241,31 +263,24 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  // Firebase Web SDK via CDN (modular)
-  // Version reference: Firebase JS SDK v10.12.3 noted in Firebase releases. 
-  // (You can pin newer versions later if you want.) 
+  // Firebase via CDN (works in a single HTML file on GitHub Pages)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
   import {
-    getFirestore, collection, doc, getDocs, addDoc, query, orderBy
+    getFirestore, collection, getDocs, addDoc, query, orderBy
   } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-  import {
-    getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
-  // 1) Put your Firebase config here (Firebase Console → Project settings → Web app)
+  // ✅ YOUR CONFIG (you pasted this from Firebase)
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID",
+    apiKey: "AIzaSyAy_584m9VYEQbxg6j0T_YQHS8WPMuvrN4",
+    authDomain: "justjame-f44db.firebaseapp.com",
+    projectId: "justjame-f44db",
+    storageBucket: "justjame-f44db.firebasestorage.app",
+    messagingSenderId: "1040161135787",
+    appId: "1:1040161135787:web:93375e5a5bf18f4749abee"
   };
-
-  // 2) Replace with your admin UID (after first login, copy from Firebase Auth user)
-  const ADMIN_UID = "ADMIN_UID";
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const auth = getAuth(app);
 
   const els = {
     statusPill: document.getElementById("statusPill"),
@@ -277,29 +292,23 @@
     placeOrderBtn: document.getElementById("placeOrderBtn"),
     clearBtn: document.getElementById("clearBtn"),
     toast: document.getElementById("toast"),
-    signInBtn: document.getElementById("signInBtn"),
-    signOutBtn: document.getElementById("signOutBtn"),
-    authPill: document.getElementById("authPill"),
-    adminPanel: document.getElementById("adminPanel"),
-    // Admin
-    restName: document.getElementById("restName"),
-    restDesc: document.getElementById("restDesc"),
-    addRestBtn: document.getElementById("addRestBtn"),
-    itemRestId: document.getElementById("itemRestId"),
-    itemName: document.getElementById("itemName"),
-    itemPrice: document.getElementById("itemPrice"),
-    addItemBtn: document.getElementById("addItemBtn"),
+    search: document.getElementById("search"),
   };
 
-  const cart = new Map(); // key: `${rid}__${itemName}`, value: {rid, restaurantName, name, price, qty}
+  const cart = new Map(); // key: `${rid}__${itemName}`
 
   function toast(msg){
     els.toast.textContent = msg;
     els.toast.classList.add("show");
     setTimeout(()=>els.toast.classList.remove("show"), 2200);
   }
-
   function money(n){ return "£" + Number(n).toFixed(2); }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+  }
+  function keyOf(it){ return `${it.rid}__${it.name}`; }
 
   function cartSummary(){
     let items = 0;
@@ -316,7 +325,7 @@
   function renderCart(){
     els.cart.innerHTML = "";
     if (cart.size === 0){
-      els.cart.innerHTML = `<div class="muted">Your basket is empty. Add something tasty 👇</div>`;
+      els.cart.innerHTML = `<div class="empty">Your basket is empty. Add something tasty 👇</div>`;
       cartSummary();
       return;
     }
@@ -343,8 +352,6 @@
     cartSummary();
   }
 
-  function keyOf(it){ return `${it.rid}__${it.name}`; }
-
   function addToCart({rid, restaurantName, name, price}){
     const key = `${rid}__${name}`;
     const existing = cart.get(key);
@@ -353,32 +360,31 @@
     renderCart();
   }
 
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[m]));
+  let MENU_CACHE = []; // used for search filtering
+
+  function applySearch(){
+    const q = els.search.value.trim().toLowerCase();
+    renderMenu(MENU_CACHE, q);
   }
 
-  async function loadMenu(){
-    els.statusPill.textContent = "🟠 Loading…";
+  function renderMenu(menu, q=""){
     els.restaurants.innerHTML = "";
 
-    const restsSnap = await getDocs(query(collection(db, "restaurants"), orderBy("sort", "asc")));
-    const rests = [];
-    restsSnap.forEach(d => rests.push({id: d.id, ...d.data()}));
+    const filtered = (q ? menu.filter(r => {
+      const inRest = (r.name||"").toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
+      const inItems = (r.items||[]).some(it =>
+        (it.name||"").toLowerCase().includes(q) || (it.desc||"").toLowerCase().includes(q)
+      );
+      return inRest || inItems;
+    }) : menu);
 
-    if (rests.length === 0){
-      els.restaurants.innerHTML = `<div class="muted">No restaurants yet. (Admin: sign in and add one.)</div>`;
-      els.statusPill.textContent = "🟢 Ready";
+    if (filtered.length === 0){
+      els.restaurants.innerHTML = `<div class="empty">No matches. Try a different search.</div>`;
       return;
     }
 
-    for (const r of rests){
+    for (const r of filtered){
       if (r.active === false) continue;
-
-      const itemsSnap = await getDocs(query(collection(db, "restaurants", r.id, "items"), orderBy("sort","asc")));
-      const items = [];
-      itemsSnap.forEach(d => items.push({id: d.id, ...d.data()}));
 
       const card = document.createElement("div");
       card.className = "rest";
@@ -387,20 +393,27 @@
           <div style="min-width:0">
             <p class="restName">${escapeHtml(r.name || "Unnamed")}</p>
             <p class="restMeta">${escapeHtml(r.description || "")}</p>
-            <p class="restMeta"><span class="pill">ID: ${escapeHtml(r.id)}</span></p>
+            <p class="restMeta"><span class="badge">ID: ${escapeHtml(r.id)}</span></p>
           </div>
-          <span class="pill">🔥 Popular</span>
+          <span class="badge warn">⏱️ 25–45 min</span>
         </div>
         <div class="items"></div>
       `;
 
       const itemsEl = card.querySelector(".items");
+      const items = (r.items || []).filter(it => it.available !== false);
 
       if (items.length === 0){
-        itemsEl.innerHTML = `<div class="muted">No items yet.</div>`;
+        itemsEl.innerHTML = `<div class="empty">No items yet.</div>`;
       } else {
         for (const it of items){
-          if (it.available === false) continue;
+          // If searching, hide items that don't match (but keep restaurant if restaurant matched)
+          if (q){
+            const hit = (it.name||"").toLowerCase().includes(q) || (it.desc||"").toLowerCase().includes(q);
+            const restHit = (r.name||"").toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
+            if (!hit && !restHit) continue;
+          }
+
           const row = document.createElement("div");
           row.className = "item";
           row.innerHTML = `
@@ -428,11 +441,38 @@
 
       els.restaurants.appendChild(card);
     }
-
-    els.statusPill.textContent = "🟢 Ready";
   }
 
-  // Orders
+  async function loadMenu(){
+    els.statusPill.textContent = "🟠 Loading menu…";
+    els.statusPill.style.color = "var(--muted)";
+
+    // 1) restaurants
+    const restsSnap = await getDocs(query(collection(db, "restaurants"), orderBy("sort", "asc")));
+    const rests = [];
+    restsSnap.forEach(d => rests.push({id: d.id, ...d.data()}));
+
+    // 2) items per restaurant
+    for (const r of rests){
+      const itemsSnap = await getDocs(query(collection(db, "restaurants", r.id, "items"), orderBy("sort","asc")));
+      const items = [];
+      itemsSnap.forEach(d => items.push({id: d.id, ...d.data()}));
+      r.items = items;
+    }
+
+    MENU_CACHE = rests;
+    renderMenu(MENU_CACHE, els.search.value.trim().toLowerCase());
+
+    els.statusPill.textContent = "🟢 Ready";
+    els.statusPill.style.color = "var(--muted)";
+
+    if (rests.length === 0){
+      els.restaurants.innerHTML = `<div class="empty">
+        No restaurants yet. Add one in Firebase → Firestore → Data.
+      </div>`;
+    }
+  }
+
   async function placeOrder(){
     const { items, total } = cartSummary();
     if (items === 0){
@@ -440,7 +480,7 @@
       return;
     }
 
-    // Require one restaurant per order (simple + clean)
+    // One restaurant per order
     const uniqueRids = new Set([...cart.values()].map(i => i.rid));
     if (uniqueRids.size !== 1){
       toast("One restaurant per order, please.");
@@ -465,13 +505,13 @@
 
     try{
       await addDoc(collection(db, "orders"), payload);
-      toast("Order sent! Jame has been pinged 📲");
+      toast("Order sent! ✅");
       cart.clear();
       els.note.value = "";
       renderCart();
     } catch (e){
       console.error(e);
-      toast("Order failed. Check console.");
+      toast("Order failed. Open console for details.");
     } finally{
       els.placeOrderBtn.disabled = false;
       els.placeOrderBtn.textContent = "Place order";
@@ -480,86 +520,18 @@
 
   els.placeOrderBtn.onclick = placeOrder;
   els.clearBtn.onclick = () => { cart.clear(); renderCart(); toast("Cleared."); };
+  els.search.addEventListener("input", applySearch);
 
-  // Admin auth
-  const provider = new GoogleAuthProvider();
-  els.signInBtn.onclick = async () => {
-    try{
-      await signInWithPopup(auth, provider);
-    } catch(e){
-      console.error(e);
-      toast("Sign-in failed.");
-    }
-  };
-  els.signOutBtn.onclick = async () => { await signOut(auth); };
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user){
-      els.signInBtn.style.display = "";
-      els.signOutBtn.style.display = "none";
-      els.adminPanel.style.display = "none";
-      els.authPill.textContent = "👀 Menu is public";
-      return;
-    }
-
-    els.signInBtn.style.display = "none";
-    els.signOutBtn.style.display = "";
-    els.authPill.textContent = `🔐 Signed in: ${user.email || "admin"}`;
-
-    const isAdmin = user.uid === ADMIN_UID;
-    els.adminPanel.style.display = isAdmin ? "" : "none";
-    if (!isAdmin) toast("Signed in (not admin).");
-    else toast("Admin mode ✅");
-  });
-
-  // Admin actions (writes will only succeed for ADMIN_UID due to Firestore rules)
-  els.addRestBtn.onclick = async () => {
-    const name = els.restName.value.trim();
-    const description = els.restDesc.value.trim();
-    if (!name) return toast("Restaurant name needed.");
-
-    try{
-      await addDoc(collection(db, "restaurants"), {
-        name, description,
-        active: true,
-        sort: Date.now(),
-        createdAt: new Date()
-      });
-      els.restName.value = ""; els.restDesc.value = "";
-      toast("Restaurant added ✅");
-      await loadMenu();
-    } catch(e){
-      console.error(e);
-      toast("Add failed (admin only).");
-    }
-  };
-
-  els.addItemBtn.onclick = async () => {
-    const rid = els.itemRestId.value.trim();
-    const name = els.itemName.value.trim();
-    const price = Number(els.itemPrice.value);
-    if (!rid || !name || !Number.isFinite(price)) return toast("Need restaurant ID, item name, and price.");
-
-    try{
-      await addDoc(collection(db, "restaurants", rid, "items"), {
-        name,
-        price,
-        desc: "",
-        available: true,
-        sort: Date.now()
-      });
-      els.itemName.value = ""; els.itemPrice.value = "";
-      toast("Item added ✅");
-      await loadMenu();
-    } catch(e){
-      console.error(e);
-      toast("Add failed (admin only).");
-    }
-  };
+  renderCart();
 
   // Boot
-  renderCart();
-  loadMenu();
+  try{
+    await loadMenu();
+  } catch (e){
+    console.error(e);
+    els.statusPill.textContent = "🔴 Error";
+    toast("Firebase error. Check console.");
+  }
 </script>
 
 </body>
