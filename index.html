@@ -31,7 +31,6 @@
         radial-gradient(900px 500px at 110% 0%, #ffe0c3 0, transparent 60%),
         var(--bg);
     }
-    a{color:inherit}
 
     /* Header */
     header{
@@ -41,16 +40,13 @@
       border-bottom:1px solid var(--line);
     }
     .wrap{max-width:1120px;margin:0 auto;padding:12px 14px}
-    .topbar{
-      display:flex;gap:12px;align-items:center;justify-content:space-between;
-    }
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between}
     .brand{display:flex;gap:12px;align-items:center;min-width:0}
     .logo{
       width:44px;height:44px;border-radius:16px;
       background: linear-gradient(135deg,var(--brand),var(--brand2));
       box-shadow: var(--shadow);
-      position:relative; overflow:hidden;
-      flex:0 0 auto;
+      position:relative; overflow:hidden; flex:0 0 auto;
     }
     .logo:after{
       content:"";
@@ -70,19 +66,6 @@
       font-weight:900;
     }
     .tagline span{color:var(--brand)}
-    .searchRow{
-      display:flex;gap:10px;align-items:center;justify-content:flex-end;
-      flex:1;min-width:0;
-    }
-    .search{
-      flex:1;min-width:0;max-width:560px;
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:10px 12px;
-      font:inherit;
-      outline:none;
-    }
     .pill{
       display:inline-flex;gap:8px;align-items:center;
       padding:8px 10px;border-radius:999px;
@@ -93,7 +76,7 @@
     .pill.good{color:var(--good)}
     .pill.bad{color:var(--bad)}
 
-    /* Page Layout */
+    /* Layout: Desktop two column, Mobile app flow */
     .page{
       max-width:1120px;
       margin:0 auto;
@@ -101,7 +84,16 @@
       display:grid;
       grid-template-columns: 1fr;
       gap:14px;
-      padding-bottom: calc(100px + env(safe-area-inset-bottom));
+      padding-bottom: calc(90px + env(safe-area-inset-bottom)); /* room for basket bar */
+    }
+    @media (min-width: 980px){
+      .page{
+        padding:18px;
+        grid-template-columns: 1.2fr .8fr;
+        gap:18px;
+        align-items:start;
+        padding-bottom: 18px;
+      }
     }
 
     .card{
@@ -120,116 +112,20 @@
     .sectionTitle{font-size:15px;margin:0 0 4px;font-weight:950}
     .sectionDesc{margin:0;color:var(--muted);font-size:12px;line-height:1.3}
 
-    /* Chips */
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .chip{
+    /* Search + nav bar inside main */
+    .navBar{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      padding:12px 14px;border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.65);
+    }
+    .search{
+      flex:1;min-width:180px;
       border:1px solid var(--line);
       background:#fff;
       border-radius:999px;
-      padding:8px 10px;
-      font-size:12px;
-      color:var(--muted);
-      cursor:pointer;
-      user-select:none;
-      transition:.12s;
-    }
-    .chip:hover{transform:translateY(-1px)}
-    .chip.active{
-      border-color: rgba(255,122,0,.35);
-      box-shadow: 0 6px 16px rgba(255,122,0,.18);
-      color:var(--ink);
-      font-weight:900;
-    }
-
-    /* Restaurant blocks */
-    .restList{display:flex;flex-direction:column;gap:12px}
-    .rest{
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius: 18px;
-      background: #fff;
-    }
-    .restToggle{
-      display:flex;gap:10px;align-items:center;justify-content:space-between;
-      cursor:pointer;
-      user-select:none;
-    }
-    .restLeft{min-width:0}
-    .restName{font-size:15px;margin:0;line-height:1.2;font-weight:950}
-    .restMeta{color:var(--muted);font-size:12px;margin:4px 0 0;line-height:1.3}
-    .chev{
-      width:36px;height:36px;border-radius:14px;
-      border:1px solid var(--line);
-      display:flex;align-items:center;justify-content:center;
-      background:#fff;
-      flex:0 0 auto;
-      transition: transform .18s ease;
-    }
-    .chev.open{transform: rotate(180deg)}
-    .restBody{margin-top:10px}
-    .restBody[hidden]{display:none !important}
-
-    .catBlock{
-      margin-top:12px;
-      border-top:1px dashed var(--line);
-      padding-top:10px;
-    }
-    .catToggle{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      cursor:pointer;
-      user-select:none;
-      padding:6px 2px;
-    }
-    .catName{font-weight:950;font-size:13px;letter-spacing:.2px}
-    .catRight{display:flex;gap:8px;align-items:center}
-    .miniPill{
-      display:inline-flex;gap:6px;align-items:center;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-size:11px;color:var(--muted);
-      white-space:nowrap;
-    }
-    .catBody[hidden]{display:none !important}
-
-    /* Items */
-    .items{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-    .item{
-      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
-      padding:12px;border-radius:16px;border:1px solid var(--line);
-      background: #fffdfb;
-    }
-    .itemMain{min-width:0;flex:1}
-    .itemTitle{font-weight:950}
-    .itemDesc{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.35}
-    .itemMetaRow{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
-    .price{font-weight:950}
-    .selectedPill{
-      display:none;
-      border:1px solid rgba(255,122,0,.35);
-      background: rgba(255,122,0,.08);
-      color: var(--ink);
-      padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;
-    }
-    .selectedPill.show{display:inline-flex}
-
-    .optBox{
-      margin-top:10px;
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:14px;
-      padding:10px;
-    }
-    .optTitle{font-size:12px;color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;gap:10px}
-    .optList{display:grid;grid-template-columns:1fr;gap:8px}
-    .optLabel{
-      display:flex;gap:8px;align-items:flex-start;
-      font-size:13px;line-height:1.2;user-select:none;
-    }
-    .optLabel input{margin-top:2px}
-
-    .actionCol{
-      display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto;
+      padding:10px 12px;
+      font:inherit;
+      outline:none;
     }
     .btn{
       border:0; cursor:pointer;
@@ -242,6 +138,7 @@
       transition: transform .05s ease, opacity .15s ease;
       user-select:none;
       white-space:nowrap;
+      min-height:44px;
     }
     .btn:active{transform: translateY(1px)}
     .btn.secondary{
@@ -252,17 +149,119 @@
     }
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
+    .crumbs{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+      font-size:12px;color:var(--muted);
+    }
+    .crumb{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      user-select:none;
+      min-height:36px;
+    }
+    .crumb.current{
+      cursor:default;
+      font-weight:900;
+      color:var(--ink);
+      border-color: rgba(255,122,0,.35);
+      background: rgba(255,122,0,.08);
+    }
+
+    /* Lists */
+    .list{display:flex;flex-direction:column;gap:10px}
+    .tile{
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, box-shadow .12s ease;
+      min-height:56px;
+    }
+    .tile:hover{transform: translateY(-1px)}
+    .tileTop{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+    }
+    .tileTitle{margin:0;font-weight:950}
+    .tileSub{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.3}
+    .miniPill{
+      display:inline-flex;gap:6px;align-items:center;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:11px;color:var(--muted);
+      white-space:nowrap;
+      min-height:28px;
+    }
+
+    /* Item cards */
+    .item{
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffdfb;
+    }
+    .itemRow{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+    }
+    .itemMain{min-width:0;flex:1}
+    .itemTitle{font-weight:950;margin:0}
+    .itemDesc{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+    .itemMeta{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .price{font-weight:950}
+    .pickPill{
+      border:1px solid rgba(255,122,0,.35);
+      background: rgba(255,122,0,.08);
+      color: var(--ink);
+      padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;
+      display:inline-flex;gap:6px;align-items:center;
+    }
+
+    .optWrap{
+      margin-top:12px;
+      border-top:1px dashed var(--line);
+      padding-top:10px;
+      display:none;
+    }
+    .optWrap.show{display:block}
+    .optTitle{
+      font-size:12px;color:var(--muted);margin:0 0 8px;
+      display:flex;justify-content:space-between;gap:10px;
+    }
+    .optList{display:grid;grid-template-columns:1fr;gap:8px}
+    .optLabel{
+      display:flex;gap:10px;align-items:flex-start;
+      font-size:13px;line-height:1.2;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      user-select:none;
+    }
+    .optLabel input{margin-top:2px}
+
     .empty{
       padding:12px;border:1px dashed var(--line);
       border-radius:16px;background:#fff;
       color:var(--muted);font-size:12px;line-height:1.3
     }
 
-    /* Basket: desktop card + mobile bottom sheet */
+    /* Desktop basket card */
     .basketWrap{
-      position:sticky;
-      bottom:10px;
-      z-index:30;
+      display:none;
+    }
+    @media (min-width: 980px){
+      .basketWrap{
+        display:block;
+        position:sticky; top:88px;
+      }
     }
     .cartList{display:flex;flex-direction:column;gap:10px}
     .cartRow{
@@ -275,9 +274,11 @@
     .cartOpts{margin-top:6px;color:#374151;font-size:12px;line-height:1.25}
     .qty{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .iconBtn{
-      width:34px;height:34px;border-radius:12px;border:1px solid var(--line);
+      width:38px;height:38px;border-radius:14px;border:1px solid var(--line);
       background:#fff;cursor:pointer;font-weight:950;
       user-select:none;
+      min-height:44px;
+      display:flex;align-items:center;justify-content:center;
     }
     .totals{display:flex;justify-content:space-between;font-weight:950;margin-top:10px}
     textarea{
@@ -290,7 +291,7 @@
       outline:none;
     }
 
-    /* Mobile basket bar */
+    /* Mobile basket bar + bottom sheet */
     .basketBar{
       position:fixed;
       left:0; right:0;
@@ -302,6 +303,10 @@
       z-index:80;
       display:flex;
       justify-content:center;
+    }
+    @media (min-width: 980px){
+      .basketBar{display:none}
+      .page{padding-bottom:18px}
     }
     .basketBarInner{
       width:min(1120px, 100%);
@@ -315,20 +320,18 @@
     .basketBarLeft{display:flex;flex-direction:column;gap:2px;min-width:0}
     .basketBarLeft b{font-size:13px}
     .basketBarLeft span{font-size:12px;color:var(--muted)}
-    .basketOpenBtn{padding:10px 12px}
+    .basketOpenBtn{padding:10px 14px;min-width:110px}
 
-    /* Basket modal (mobile) */
-    .modalBackdrop{
+    .backdrop{
       position:fixed; inset:0;
       background: rgba(15,23,42,.35);
       z-index:90;
       display:none;
     }
-    .modalBackdrop.show{display:block}
-    .modal{
+    .backdrop.show{display:block}
+    .sheet{
       position:fixed;
-      left:0; right:0;
-      bottom:0;
+      left:0; right:0; bottom:0;
       z-index:100;
       background:#fff;
       border-radius: 22px 22px 0 0;
@@ -336,12 +339,12 @@
       box-shadow: var(--shadow);
       transform: translateY(110%);
       transition: transform .22s ease;
-      max-height: 82vh;
+      max-height: 88vh;
       display:flex;
       flex-direction:column;
     }
-    .modal.show{transform: translateY(0)}
-    .modalHd{
+    .sheet.show{transform: translateY(0)}
+    .sheetHd{
       padding:12px 14px;
       border-bottom:1px solid var(--line);
       display:flex;justify-content:space-between;align-items:center;gap:10px;
@@ -351,7 +354,7 @@
       background:#e5e7eb;
       margin:0 auto 8px;
     }
-    .modalBd{padding:14px;overflow:auto}
+    .sheetBd{padding:14px;overflow:auto}
 
     .toast{
       position:fixed; left:50%; bottom:84px; transform:translateX(-50%);
@@ -362,29 +365,12 @@
       z-index:120;
     }
     .toast.show{opacity:1}
-
-    /* Desktop tweaks */
-    @media (min-width: 980px){
-      .wrap{padding:14px 18px}
-      .brandName{font-size:20px}
-      .tagline{font-size:13px}
-      .pill{padding:10px 12px;font-size:13px}
-      .page{
-        padding:18px;
-        grid-template-columns: 1.2fr .8fr;
-        gap:18px;
-        align-items:start;
-        padding-bottom: 18px;
-      }
-      .basketWrap{position:sticky; top:88px; bottom:auto}
-      .basketBar{display:none}
+    @media (min-width:980px){
       .toast{bottom:18px}
-      .hd{padding:16px 16px 12px}
-      .bd{padding:16px}
-      .sectionTitle{font-size:16px}
-      .sectionDesc{font-size:13px}
-      .search{padding:11px 14px}
     }
+
+    /* Small helper */
+    .muted{color:var(--muted)}
   </style>
 </head>
 
@@ -398,89 +384,108 @@
         <div class="tagline">DID SOMEBODY SAY <span>JUST JAME?</span></div>
       </div>
     </div>
-
-    <div class="searchRow">
-      <input id="search" class="search" placeholder="Search restaurants, categories, items, options…" />
-      <span class="pill" id="statusPill">🟠 Loading…</span>
-    </div>
+    <span class="pill" id="statusPill">🟠 Loading…</span>
   </div>
 </header>
 
 <div class="page">
+  <!-- MAIN APP FLOW -->
   <main class="card">
+    <div class="navBar">
+      <div class="crumbs" id="crumbs"></div>
+      <input id="search" class="search" placeholder="Search…" />
+      <button class="btn secondary" id="clearSearchBtn">Clear</button>
+    </div>
+
     <div class="hd">
       <div>
-        <p class="sectionTitle">Restaurants</p>
-        <p class="sectionDesc">Tap a restaurant to open it. Choose options, then Add.</p>
-        <div class="chips" id="chips"></div>
+        <p class="sectionTitle" id="viewTitle">Restaurants</p>
+        <p class="sectionDesc" id="viewDesc">Pick a restaurant to start ordering.</p>
       </div>
-      <span class="pill" id="menuCount">0 live</span>
+      <span class="pill" id="viewCount">0</span>
     </div>
+
     <div class="bd">
-      <div class="restList" id="restaurants"></div>
+      <!-- Views -->
+      <div id="viewRestaurants" class="list"></div>
+      <div id="viewCategories" class="list" hidden></div>
+      <div id="viewItems" class="list" hidden></div>
+
       <div style="margin-top:12px" class="empty">
-        Admin: edit the menu in Firebase → Firestore → Data.
+        Admin: menu is Firestore → restaurants → categories → items.
       </div>
     </div>
   </main>
 
+  <!-- DESKTOP BASKET -->
   <aside class="basketWrap">
-    <div class="card" id="basketCard">
+    <div class="card">
       <div class="hd">
         <div>
           <p class="sectionTitle">Basket</p>
-          <p class="sectionDesc">Review picks, add a note, then place order.</p>
+          <p class="sectionDesc">Review picks, add a note, place order.</p>
         </div>
-        <span class="pill" id="cartCount">0 items</span>
+        <span class="pill" id="cartCountDesktop">0 items</span>
       </div>
-      <div class="bd" id="basketBody">
-        <div class="cartList" id="cart"></div>
+      <div class="bd">
+        <div class="cartList" id="cartDesktop"></div>
 
         <div class="totals">
           <span>Total</span>
-          <span id="total">£0.00</span>
+          <span id="totalDesktop">£0.00</span>
         </div>
 
         <div style="margin-top:12px">
-          <textarea id="note" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
+          <textarea id="noteDesktop" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
         </div>
 
         <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-          <button class="btn" id="placeOrderBtn" style="flex:1">Place order</button>
-          <button class="btn secondary" id="clearBtn">Clear</button>
+          <button class="btn" id="placeOrderBtnDesktop" style="flex:1">Place order</button>
+          <button class="btn secondary" id="clearBtnDesktop">Clear</button>
         </div>
-
-        <p class="sub" style="margin:10px 2px 0;color:var(--muted)">
-          Orders are saved to Firestore (<b>orders</b>). Telegram comes next.
-        </p>
       </div>
     </div>
   </aside>
 </div>
 
-<!-- Mobile basket bar -->
+<!-- MOBILE BASKET BAR -->
 <div class="basketBar" id="basketBar">
   <div class="basketBarInner">
     <div class="basketBarLeft">
-      <b id="basketBarTitle">Basket</b>
+      <b>Basket</b>
       <span id="basketBarMeta">0 items · £0.00</span>
     </div>
-    <button class="btn basketOpenBtn" id="openBasketBtn">Open</button>
+    <button class="btn basketOpenBtn" id="openSheetBtn">View basket</button>
   </div>
 </div>
 
-<!-- Mobile basket modal -->
-<div class="modalBackdrop" id="modalBackdrop"></div>
-<div class="modal" id="basketModal" aria-hidden="true">
-  <div class="modalHd">
+<!-- MOBILE BASKET SHEET -->
+<div class="backdrop" id="backdrop"></div>
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheetHd">
     <div style="flex:1">
       <div class="grabber"></div>
       <b>Basket</b>
+      <div class="muted" style="font-size:12px;margin-top:2px" id="cartCountMobile">0 items</div>
     </div>
-    <button class="btn secondary" id="closeBasketBtn">Close</button>
+    <button class="btn secondary" id="closeSheetBtn">Close</button>
   </div>
-  <div class="modalBd" id="modalBody">
-    <!-- basket content is cloned in here on open -->
+  <div class="sheetBd">
+    <div class="cartList" id="cartMobile"></div>
+
+    <div class="totals">
+      <span>Total</span>
+      <span id="totalMobile">£0.00</span>
+    </div>
+
+    <div style="margin-top:12px">
+      <textarea id="noteMobile" placeholder="Notes (e.g. ‘no onions’, ‘extra spicy’)"></textarea>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn" id="placeOrderBtnMobile" style="flex:1">Place order</button>
+      <button class="btn secondary" id="clearBtnMobile">Clear</button>
+    </div>
   </div>
 </div>
 
@@ -508,36 +513,55 @@
 
   const els = {
     statusPill: document.getElementById("statusPill"),
-    menuCount: document.getElementById("menuCount"),
-    restaurants: document.getElementById("restaurants"),
-    chips: document.getElementById("chips"),
 
-    cart: document.getElementById("cart"),
-    total: document.getElementById("total"),
-    cartCount: document.getElementById("cartCount"),
-    note: document.getElementById("note"),
-    placeOrderBtn: document.getElementById("placeOrderBtn"),
-    clearBtn: document.getElementById("clearBtn"),
+    crumbs: document.getElementById("crumbs"),
+    search: document.getElementById("search"),
+    clearSearchBtn: document.getElementById("clearSearchBtn"),
 
-    basketBar: document.getElementById("basketBar"),
+    viewTitle: document.getElementById("viewTitle"),
+    viewDesc: document.getElementById("viewDesc"),
+    viewCount: document.getElementById("viewCount"),
+
+    viewRestaurants: document.getElementById("viewRestaurants"),
+    viewCategories: document.getElementById("viewCategories"),
+    viewItems: document.getElementById("viewItems"),
+
+    // desktop basket
+    cartDesktop: document.getElementById("cartDesktop"),
+    totalDesktop: document.getElementById("totalDesktop"),
+    cartCountDesktop: document.getElementById("cartCountDesktop"),
+    noteDesktop: document.getElementById("noteDesktop"),
+    placeOrderBtnDesktop: document.getElementById("placeOrderBtnDesktop"),
+    clearBtnDesktop: document.getElementById("clearBtnDesktop"),
+
+    // mobile bar + sheet
     basketBarMeta: document.getElementById("basketBarMeta"),
-    openBasketBtn: document.getElementById("openBasketBtn"),
-
-    modalBackdrop: document.getElementById("modalBackdrop"),
-    basketModal: document.getElementById("basketModal"),
-    closeBasketBtn: document.getElementById("closeBasketBtn"),
-    modalBody: document.getElementById("modalBody"),
-    basketBody: document.getElementById("basketBody"),
+    openSheetBtn: document.getElementById("openSheetBtn"),
+    closeSheetBtn: document.getElementById("closeSheetBtn"),
+    backdrop: document.getElementById("backdrop"),
+    sheet: document.getElementById("sheet"),
+    cartMobile: document.getElementById("cartMobile"),
+    totalMobile: document.getElementById("totalMobile"),
+    cartCountMobile: document.getElementById("cartCountMobile"),
+    noteMobile: document.getElementById("noteMobile"),
+    placeOrderBtnMobile: document.getElementById("placeOrderBtnMobile"),
+    clearBtnMobile: document.getElementById("clearBtnMobile"),
 
     toast: document.getElementById("toast"),
-    search: document.getElementById("search"),
   };
 
-  // Cart lines separated by options so “Drink + Diet Coke” ≠ “Drink + Water”
-  const cart = new Map();
-  let MENU_CACHE = [];
-  let ACTIVE_CHIP = "All";
+  // Data
+  let MENU = [];              // restaurants + categories + items loaded
+  let STATE = {               // app flow state
+    view: "restaurants",      // "restaurants" | "categories" | "items"
+    restaurantId: null,
+    categoryId: null,
+  };
 
+  // Cart: key includes options
+  const cart = new Map();
+
+  // ---------- helpers ----------
   function toast(msg){
     els.toast.textContent = msg;
     els.toast.classList.add("show");
@@ -550,23 +574,19 @@
     }[m]));
   }
 
-  function money(n){
-    return "£" + Number(n || 0).toFixed(2);
-  }
-
-  function normalize(s){
-    return String(s ?? "").toLowerCase();
-  }
+  function normalize(s){ return String(s ?? "").toLowerCase(); }
+  function money(n){ return "£" + Number(n || 0).toFixed(2); }
 
   function optsKey(options){
     if (!Array.isArray(options) || options.length === 0) return "";
     return options.slice().sort((a,b)=>String(a).localeCompare(String(b))).join("||");
   }
+  function cartKey(it){ return `${it.rid}__${it.name}__${optsKey(it.options)}`; }
 
-  function cartKey(it){
-    return `${it.rid}__${it.name}__${optsKey(it.options)}`;
-  }
+  function getRestaurantById(rid){ return MENU.find(r => r.id === rid) || null; }
+  function getCategoryById(r, cid){ return (r?.categories||[]).find(c => c.id === cid) || null; }
 
+  // ---------- cart ----------
   function cartSummary(){
     let items = 0;
     let total = 0;
@@ -574,18 +594,20 @@
       items += it.qty;
       total += it.qty * it.price;
     }
-    els.cartCount.textContent = `${items} item${items===1?"":"s"}`;
-    els.total.textContent = money(total);
+    els.cartCountDesktop.textContent = `${items} item${items===1?"":"s"}`;
+    els.totalDesktop.textContent = money(total);
+
+    els.cartCountMobile.textContent = `${items} item${items===1?"":"s"}`;
+    els.totalMobile.textContent = money(total);
     els.basketBarMeta.textContent = `${items} item${items===1?"":"s"} · ${money(total)}`;
+
     return {items, total};
   }
 
-  function renderCart(){
-    els.cart.innerHTML = "";
-
+  function renderCartInto(container){
+    container.innerHTML = "";
     if (cart.size === 0){
-      els.cart.innerHTML = `<div class="empty">Your basket is empty. Add something tasty 👇</div>`;
-      cartSummary();
+      container.innerHTML = `<div class="empty">Your basket is empty. Add something tasty 👇</div>`;
       return;
     }
 
@@ -621,8 +643,18 @@
         renderCart();
       };
 
-      els.cart.appendChild(row);
+      container.appendChild(row);
     }
+  }
+
+  function renderCart(){
+    renderCartInto(els.cartDesktop);
+    renderCartInto(els.cartMobile);
+
+    // keep notes in sync across desktop/mobile
+    const n = els.noteDesktop.value || els.noteMobile.value || "";
+    els.noteDesktop.value = n;
+    els.noteMobile.value = n;
 
     cartSummary();
   }
@@ -645,236 +677,338 @@
     renderCart();
   }
 
-  function itemMatchesQuery(r, c, it, q){
-    if (!q) return true;
-    const rHit = normalize(r.name).includes(q) || normalize(r.description).includes(q);
-    const cHit = normalize(c.name).includes(q);
-    const iHit = normalize(it.name).includes(q) || normalize(it.desc).includes(q);
-    const oHit = Array.isArray(it.options) && it.options.some(o => normalize(o).includes(q));
-    return rHit || cHit || iHit || oHit;
+  // One restaurant per order
+  function currentCartRestaurantId(){
+    const ids = new Set([...cart.values()].map(i => i.rid));
+    return ids.size === 1 ? [...ids][0] : null;
   }
 
-  function buildChips(menu){
-    // Collect unique category names
-    const set = new Set();
-    for (const r of menu){
-      for (const c of (r.categories||[])){
-        if (c?.name) set.add(c.name);
+  // ---------- mobile sheet ----------
+  function openSheet(){
+    els.backdrop.classList.add("show");
+    els.sheet.classList.add("show");
+    els.sheet.setAttribute("aria-hidden","false");
+  }
+  function closeSheet(){
+    els.backdrop.classList.remove("show");
+    els.sheet.classList.remove("show");
+    els.sheet.setAttribute("aria-hidden","true");
+  }
+
+  // ---------- app flow ----------
+  function setView(view, restaurantId=null, categoryId=null){
+    STATE = { view, restaurantId, categoryId };
+    renderView();
+  }
+
+  function showOnly(which){
+    els.viewRestaurants.hidden = which !== "restaurants";
+    els.viewCategories.hidden = which !== "categories";
+    els.viewItems.hidden = which !== "items";
+  }
+
+  function renderCrumbs(){
+    const parts = [];
+    parts.push({ label:"Restaurants", view:"restaurants" });
+
+    if (STATE.restaurantId){
+      const r = getRestaurantById(STATE.restaurantId);
+      parts.push({ label: r?.name || "Restaurant", view:"categories" });
+    }
+    if (STATE.categoryId){
+      const r = getRestaurantById(STATE.restaurantId);
+      const c = getCategoryById(r, STATE.categoryId);
+      parts.push({ label: c?.name || "Category", view:"items" });
+    }
+
+    els.crumbs.innerHTML = "";
+    parts.forEach((p, idx) => {
+      const el = document.createElement("div");
+      el.className = "crumb" + (idx === parts.length-1 ? " current" : "");
+      el.textContent = p.label;
+
+      if (idx !== parts.length-1){
+        el.onclick = () => {
+          if (p.view === "restaurants") setView("restaurants");
+          if (p.view === "categories") setView("categories", STATE.restaurantId, null);
+        };
       }
-    }
-    const cats = ["All", ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
-
-    els.chips.innerHTML = "";
-    for (const name of cats){
-      const chip = document.createElement("div");
-      chip.className = "chip" + (name === ACTIVE_CHIP ? " active" : "");
-      chip.textContent = name;
-      chip.onclick = () => {
-        ACTIVE_CHIP = name;
-        buildChips(menu);
-        renderMenu(menu, normalize(els.search.value.trim()));
-      };
-      els.chips.appendChild(chip);
-    }
+      els.crumbs.appendChild(el);
+    });
   }
 
-  function renderMenu(menu, q=""){
-    els.restaurants.innerHTML = "";
+  function renderRestaurants(q){
+    showOnly("restaurants");
+    els.viewTitle.textContent = "Restaurants";
+    els.viewDesc.textContent = "Pick a restaurant to start ordering.";
+    renderCrumbs();
 
-    const activeRests = (menu || []).filter(r => r.active !== false);
+    const list = [];
+    for (const r of MENU){
+      if (r.active === false) continue;
+      const hay = normalize(`${r.name} ${r.description || ""}`);
+      if (q && !hay.includes(q)) continue;
+      list.push(r);
+    }
+    els.viewCount.textContent = `${list.length}`;
 
-    // Filter by chip + search
-    const filtered = activeRests
-      .map(r => {
-        const cats = (r.categories || []).map(c => ({...c}));
-        const newR = {...r, categories: cats};
-        if (ACTIVE_CHIP !== "All"){
-          newR.categories = newR.categories.filter(c => c.name === ACTIVE_CHIP);
-        }
-        return newR;
-      })
-      .filter(r => {
-        if (q){
-          return (r.categories || []).some(c => (c.items || []).some(it => itemMatchesQuery(r,c,it,q)));
-        }
-        // If chip filtered everything out, still keep restaurant (but it may show empty categories)
-        return true;
-      });
-
-    els.menuCount.textContent = `${filtered.length} live`;
-
-    if (filtered.length === 0){
-      els.restaurants.innerHTML = `<div class="empty">No matches. Try a different search.</div>`;
+    els.viewRestaurants.innerHTML = "";
+    if (list.length === 0){
+      els.viewRestaurants.innerHTML = `<div class="empty">No restaurants match your search.</div>`;
       return;
     }
 
-    for (const r of filtered){
-      const restEl = document.createElement("div");
-      restEl.className = "rest";
-
-      restEl.innerHTML = `
-        <div class="restToggle">
-          <div class="restLeft">
-            <p class="restName">${escapeHtml(r.name || "Unnamed")}</p>
-            <p class="restMeta">${escapeHtml(r.description || "")}</p>
+    for (const r of list){
+      const cats = (r.categories || []).length;
+      const items = (r.categories || []).reduce((acc,c)=>acc+(c.items||[]).length,0);
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.innerHTML = `
+        <div class="tileTop">
+          <div style="min-width:0">
+            <p class="tileTitle">${escapeHtml(r.name || "Unnamed")}</p>
+            <p class="tileSub">${escapeHtml(r.description || "")}</p>
           </div>
-          <div class="chev" aria-label="toggle">⌄</div>
-        </div>
-        <div class="restBody" hidden>
-          <div class="cats"></div>
+          <span class="miniPill">${cats} cats · ${items} items</span>
         </div>
       `;
-
-      const toggle = restEl.querySelector(".restToggle");
-      const body = restEl.querySelector(".restBody");
-      const chev = restEl.querySelector(".chev");
-      const catsEl = restEl.querySelector(".cats");
-
-      // Default: collapsed (better for long menus)
-      toggle.onclick = () => {
-        const open = !body.hasAttribute("hidden");
-        if (open){
-          body.setAttribute("hidden","");
-          chev.classList.remove("open");
-        } else {
-          body.removeAttribute("hidden");
-          chev.classList.add("open");
-        }
-      };
-
-      const cats = (r.categories || []).slice().sort((a,b)=>(a.sort ?? 0)-(b.sort ?? 0));
-
-      if (cats.length === 0){
-        catsEl.innerHTML = `<div class="empty">No categories yet.</div>`;
-        els.restaurants.appendChild(restEl);
-        continue;
-      }
-
-      for (const c of cats){
-        const visibleItems = (c.items || [])
-          .filter(it => it.available !== false)
-          .filter(it => itemMatchesQuery(r,c,it,q));
-
-        if (q && visibleItems.length === 0) continue;
-
-        const catBlock = document.createElement("div");
-        catBlock.className = "catBlock";
-        catBlock.innerHTML = `
-          <div class="catToggle">
-            <div class="catName">${escapeHtml(c.name || "Category")}</div>
-            <div class="catRight">
-              <span class="miniPill">${visibleItems.length} item${visibleItems.length===1?"":"s"}</span>
-              <span class="miniPill">⌄</span>
-            </div>
-          </div>
-          <div class="catBody">
-            <div class="items"></div>
-          </div>
-        `;
-
-        const catToggle = catBlock.querySelector(".catToggle");
-        const catBody = catBlock.querySelector(".catBody");
-        const itemsEl = catBlock.querySelector(".items");
-        const catChevron = catBlock.querySelector(".catRight .miniPill:last-child");
-
-        // Default: open categories when restaurant opened
-        catToggle.onclick = () => {
-          const hidden = catBody.hasAttribute("hidden");
-          if (hidden){
-            catBody.removeAttribute("hidden");
-            catChevron.textContent = "⌄";
-          } else {
-            catBody.setAttribute("hidden","");
-            catChevron.textContent = "›";
-          }
-        };
-
-        if (visibleItems.length === 0){
-          itemsEl.innerHTML = `<div class="empty">No items in this category.</div>`;
-          catsEl.appendChild(catBlock);
-          continue;
-        }
-
-        for (const it of visibleItems){
-          const itemEl = document.createElement("div");
-          itemEl.className = "item";
-
-          const hasOptions = Array.isArray(it.options) && it.options.length > 0;
-
-          const optionsHtml = hasOptions ? `
-            <div class="optBox">
-              <div class="optTitle">
-                <span>Pick options</span>
-                <span class="miniPill">${it.options.length} choices</span>
-              </div>
-              <div class="optList">
-                ${it.options.map(opt => `
-                  <label class="optLabel">
-                    <input type="checkbox" data-option="${escapeHtml(opt)}">
-                    <span>${escapeHtml(opt)}</span>
-                  </label>
-                `).join("")}
-              </div>
-            </div>
-          ` : "";
-
-          itemEl.innerHTML = `
-            <div class="itemMain">
-              <div class="itemTitle">${escapeHtml(it.name || "Item")}</div>
-              <div class="itemDesc">${escapeHtml(it.desc || "")}</div>
-              <div class="itemMetaRow">
-                <span class="price">${money(Number(it.price || 0))}</span>
-                <span class="selectedPill">Selected: <span class="selCount">0</span></span>
-              </div>
-              ${optionsHtml}
-            </div>
-            <div class="actionCol">
-              <button class="btn" style="padding:10px 12px">Add</button>
-              <span class="pill">${hasOptions ? "✅ pickable" : "simple"}</span>
-            </div>
-          `;
-
-          // Live "selected" pill count
-          const selectedPill = itemEl.querySelector(".selectedPill");
-          const selCountEl = itemEl.querySelector(".selCount");
-          const checkboxes = [...itemEl.querySelectorAll('input[type="checkbox"]')];
-
-          if (checkboxes.length){
-            const updateSel = () => {
-              const n = checkboxes.filter(cb => cb.checked).length;
-              selCountEl.textContent = String(n);
-              selectedPill.classList.toggle("show", n > 0);
-            };
-            checkboxes.forEach(cb => cb.addEventListener("change", updateSel));
-            updateSel();
-          }
-
-          itemEl.querySelector("button").onclick = () => {
-            const selectedOptions = [...itemEl.querySelectorAll('input[type="checkbox"]:checked')]
-              .map(cb => cb.getAttribute("data-option"))
-              .filter(Boolean);
-
-            addToCart({
-              rid: r.id,
-              restaurantName: r.name || "Restaurant",
-              name: it.name || "Item",
-              price: Number(it.price || 0),
-              options: selectedOptions
-            });
-
-            toast("Added to basket ✅");
-          };
-
-          itemsEl.appendChild(itemEl);
-        }
-
-        catsEl.appendChild(catBlock);
-      }
-
-      els.restaurants.appendChild(restEl);
+      tile.onclick = () => setView("categories", r.id, null);
+      els.viewRestaurants.appendChild(tile);
     }
   }
 
+  function renderCategories(q){
+    showOnly("categories");
+    const r = getRestaurantById(STATE.restaurantId);
+    if (!r){ setView("restaurants"); return; }
+
+    els.viewTitle.textContent = r.name || "Categories";
+    els.viewDesc.textContent = "Pick a category.";
+    renderCrumbs();
+
+    const cats = (r.categories || [])
+      .slice()
+      .sort((a,b)=>(a.sort ?? 0)-(b.sort ?? 0))
+      .filter(c => {
+        if (!q) return true;
+        const hay = normalize(`${c.name}`);
+        return hay.includes(q);
+      });
+
+    els.viewCount.textContent = `${cats.length}`;
+
+    els.viewCategories.innerHTML = "";
+    if (cats.length === 0){
+      els.viewCategories.innerHTML = `<div class="empty">No categories match your search.</div>`;
+      return;
+    }
+
+    for (const c of cats){
+      const visibleItems = (c.items || []).filter(it => it.available !== false);
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.innerHTML = `
+        <div class="tileTop">
+          <div style="min-width:0">
+            <p class="tileTitle">${escapeHtml(c.name || "Category")}</p>
+            <p class="tileSub">${escapeHtml(visibleItems.length ? "Tap to view items" : "No items yet")}</p>
+          </div>
+          <span class="miniPill">${visibleItems.length} items</span>
+        </div>
+      `;
+      tile.onclick = () => setView("items", r.id, c.id);
+      els.viewCategories.appendChild(tile);
+    }
+  }
+
+  function renderItems(q){
+    showOnly("items");
+    const r = getRestaurantById(STATE.restaurantId);
+    const c = getCategoryById(r, STATE.categoryId);
+    if (!r || !c){ setView("categories", STATE.restaurantId, null); return; }
+
+    els.viewTitle.textContent = c.name || "Items";
+    els.viewDesc.textContent = "Pick options, then Add.";
+    renderCrumbs();
+
+    const items = (c.items || [])
+      .filter(it => it.available !== false)
+      .sort((a,b)=>(a.sort ?? 0)-(b.sort ?? 0))
+      .filter(it => {
+        if (!q) return true;
+        const hay = normalize(`${it.name} ${it.desc || ""} ${(it.options||[]).join(" ")}`);
+        return hay.includes(q);
+      });
+
+    els.viewCount.textContent = `${items.length}`;
+
+    els.viewItems.innerHTML = "";
+    if (items.length === 0){
+      els.viewItems.innerHTML = `<div class="empty">No items match your search.</div>`;
+      return;
+    }
+
+    // If cart already has items from another restaurant, warn + prevent mixing
+    const cartRid = currentCartRestaurantId();
+    const mixing = cartRid && cartRid !== r.id;
+
+    if (mixing){
+      const warn = document.createElement("div");
+      warn.className = "empty";
+      warn.innerHTML = `<b>Heads up:</b> Your basket has items from <b>${escapeHtml(getRestaurantById(cartRid)?.name || "another restaurant")}</b>.
+      Clear basket to order from this restaurant.`;
+      els.viewItems.appendChild(warn);
+    }
+
+    for (const it of items){
+      const hasOptions = Array.isArray(it.options) && it.options.length > 0;
+      const card = document.createElement("div");
+      card.className = "item";
+
+      // per-item selection state lives in DOM; we build UI accordingly
+      card.innerHTML = `
+        <div class="itemRow">
+          <div class="itemMain">
+            <p class="itemTitle">${escapeHtml(it.name || "Item")}</p>
+            <p class="itemDesc">${escapeHtml(it.desc || "")}</p>
+            <div class="itemMeta">
+              <span class="price">${money(Number(it.price || 0))}</span>
+              ${hasOptions ? `<span class="pickPill">Options: <span class="optCount">${it.options.length}</span></span>` : ``}
+              <span class="miniPill selPill" style="display:none">Selected: <span class="selCount">0</span></span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end">
+            ${hasOptions ? `<button class="btn secondary chooseBtn">Choose</button>` : ``}
+            <button class="btn addBtn">Add</button>
+          </div>
+        </div>
+        ${hasOptions ? `
+          <div class="optWrap">
+            <div class="optTitle">
+              <span>Pick options</span>
+              <span class="miniPill">${it.options.length} choices</span>
+            </div>
+            <div class="optList">
+              ${it.options.map(opt => `
+                <label class="optLabel">
+                  <input type="checkbox" data-option="${escapeHtml(opt)}">
+                  <span>${escapeHtml(opt)}</span>
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        ` : ``}
+      `;
+
+      const addBtn = card.querySelector(".addBtn");
+      const chooseBtn = card.querySelector(".chooseBtn");
+      const optWrap = card.querySelector(".optWrap");
+      const selPill = card.querySelector(".selPill");
+      const selCount = card.querySelector(".selCount");
+      const boxes = [...card.querySelectorAll('input[type="checkbox"]')];
+
+      if (chooseBtn && optWrap){
+        chooseBtn.onclick = () => {
+          optWrap.classList.toggle("show");
+          chooseBtn.textContent = optWrap.classList.contains("show") ? "Hide" : "Choose";
+        };
+      }
+
+      const updateSelected = () => {
+        if (!boxes.length) return;
+        const n = boxes.filter(b => b.checked).length;
+        selCount.textContent = String(n);
+        selPill.style.display = n > 0 ? "inline-flex" : "none";
+      };
+      boxes.forEach(b => b.addEventListener("change", updateSelected));
+      updateSelected();
+
+      addBtn.disabled = mixing;
+      addBtn.onclick = () => {
+        const selectedOptions = boxes.filter(b => b.checked).map(b => b.getAttribute("data-option")).filter(Boolean);
+
+        addToCart({
+          rid: r.id,
+          restaurantName: r.name || "Restaurant",
+          name: it.name || "Item",
+          price: Number(it.price || 0),
+          options: selectedOptions
+        });
+
+        toast("Added to basket ✅");
+      };
+
+      els.viewItems.appendChild(card);
+    }
+  }
+
+  function renderView(){
+    const q = normalize(els.search.value.trim());
+    renderCrumbs();
+
+    if (STATE.view === "restaurants") renderRestaurants(q);
+    else if (STATE.view === "categories") renderCategories(q);
+    else renderItems(q);
+  }
+
+  // ---------- order ----------
+  async function placeOrder(){
+    const { items, total } = cartSummary();
+    if (items === 0){ toast("Basket is empty."); return; }
+
+    const rid = currentCartRestaurantId();
+    if (!rid){ toast("One restaurant per order."); return; }
+
+    const r = getRestaurantById(rid);
+    const note = els.noteDesktop.value || els.noteMobile.value || "";
+
+    const payload = {
+      createdAt: new Date(),
+      status: "new",
+      restaurantId: rid,
+      restaurantName: r?.name || "Restaurant",
+      items: [...cart.values()].map(i => ({
+        name: i.name,
+        price: i.price,
+        qty: i.qty,
+        options: Array.isArray(i.options) ? i.options : []
+      })),
+      note: note.trim(),
+      total
+    };
+
+    // disable buttons
+    els.placeOrderBtnDesktop.disabled = true;
+    els.placeOrderBtnMobile.disabled = true;
+
+    try{
+      await addDoc(collection(db, "orders"), payload);
+      toast("Order sent! ✅");
+      cart.clear();
+      els.noteDesktop.value = "";
+      els.noteMobile.value = "";
+      renderCart();
+      closeSheet();
+      setView("restaurants");
+      els.search.value = "";
+    } catch (e){
+      console.error(e);
+      toast("Order failed. Check console.");
+    } finally{
+      els.placeOrderBtnDesktop.disabled = false;
+      els.placeOrderBtnMobile.disabled = false;
+    }
+  }
+
+  function clearCart(){
+    cart.clear();
+    els.noteDesktop.value = "";
+    els.noteMobile.value = "";
+    renderCart();
+    toast("Cleared.");
+  }
+
+  // ---------- data load ----------
   async function loadMenu(){
     els.statusPill.textContent = "🟠 Loading…";
 
@@ -900,114 +1034,42 @@
         c.items = itemsSnap.docs.map(itDoc => ({ id: itDoc.id, ...itDoc.data() }));
         categories.push(c);
       }
+
       r.categories = categories;
     }
 
-    MENU_CACHE = rests;
-    buildChips(MENU_CACHE);
-    renderMenu(MENU_CACHE, normalize(els.search.value.trim()));
+    MENU = rests;
     els.statusPill.textContent = "🟢 Ready";
     els.statusPill.classList.remove("bad");
     els.statusPill.classList.add("good");
+
+    setView("restaurants");
   }
 
-  async function placeOrder(){
-    const { items, total } = cartSummary();
-    if (items === 0){
-      toast("Basket is empty.");
-      return;
-    }
+  // ---------- wire events ----------
+  els.search.addEventListener("input", renderView);
+  els.clearSearchBtn.onclick = () => { els.search.value = ""; renderView(); };
 
-    // One restaurant per order (keeps Telegram message clean)
-    const rids = new Set([...cart.values()].map(i => i.rid));
-    if (rids.size !== 1){
-      toast("One restaurant per order, please.");
-      return;
-    }
+  // notes sync
+  els.noteDesktop.addEventListener("input", () => { els.noteMobile.value = els.noteDesktop.value; });
+  els.noteMobile.addEventListener("input", () => { els.noteDesktop.value = els.noteMobile.value; });
 
-    const rid = [...rids][0];
-    const restaurantName = [...cart.values()][0].restaurantName;
+  // basket buttons
+  els.placeOrderBtnDesktop.onclick = placeOrder;
+  els.placeOrderBtnMobile.onclick = placeOrder;
+  els.clearBtnDesktop.onclick = clearCart;
+  els.clearBtnMobile.onclick = clearCart;
 
-    const payload = {
-      createdAt: new Date(),
-      status: "new",
-      restaurantId: rid,
-      restaurantName,
-      items: [...cart.values()].map(i => ({
-        name: i.name,
-        price: i.price,
-        qty: i.qty,
-        options: Array.isArray(i.options) ? i.options : []
-      })),
-      note: els.note.value.trim(),
-      total
-    };
+  // sheet
+  els.openSheetBtn.onclick = openSheet;
+  els.closeSheetBtn.onclick = closeSheet;
+  els.backdrop.onclick = closeSheet;
+  window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeSheet(); });
 
-    els.placeOrderBtn.disabled = true;
-    els.placeOrderBtn.textContent = "Placing…";
-
-    try{
-      await addDoc(collection(db, "orders"), payload);
-      toast("Order sent! ✅");
-      cart.clear();
-      els.note.value = "";
-      renderCart();
-      closeBasket();
-    } catch (e){
-      console.error(e);
-      toast("Order failed. Check console.");
-    } finally{
-      els.placeOrderBtn.disabled = false;
-      els.placeOrderBtn.textContent = "Place order";
-    }
-  }
-
-  // Mobile basket modal helpers
-  function openBasket(){
-    // Clone the basket body into modal
-    els.modalBody.innerHTML = "";
-    const clone = els.basketBody.cloneNode(true);
-    clone.id = "basketBodyClone";
-    els.modalBody.appendChild(clone);
-
-    // Wire buttons inside clone to call original functions
-    const placeBtn = clone.querySelector("#placeOrderBtn");
-    const clearBtn = clone.querySelector("#clearBtn");
-    const note = clone.querySelector("#note");
-
-    // Keep note synced
-    note.value = els.note.value;
-    note.addEventListener("input", () => els.note.value = note.value);
-
-    placeBtn.onclick = placeOrder;
-    clearBtn.onclick = () => { cart.clear(); els.note.value=""; renderCart(); toast("Cleared."); };
-
-    els.modalBackdrop.classList.add("show");
-    els.basketModal.classList.add("show");
-    els.basketModal.setAttribute("aria-hidden","false");
-  }
-
-  function closeBasket(){
-    els.modalBackdrop.classList.remove("show");
-    els.basketModal.classList.remove("show");
-    els.basketModal.setAttribute("aria-hidden","true");
-  }
-
-  // Wire UI
-  els.placeOrderBtn.onclick = placeOrder;
-  els.clearBtn.onclick = () => { cart.clear(); els.note.value=""; renderCart(); toast("Cleared."); };
-  els.search.addEventListener("input", () => renderMenu(MENU_CACHE, normalize(els.search.value.trim())));
-
-  els.openBasketBtn.onclick = openBasket;
-  els.closeBasketBtn.onclick = closeBasket;
-  els.modalBackdrop.onclick = closeBasket;
-
-  // Allow swipe-down-ish escape on mobile (simple)
-  window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeBasket(); });
-
+  // init cart
   renderCart();
 
-  // Load menu
+  // load
   try{
     await loadMenu();
   } catch (e){
